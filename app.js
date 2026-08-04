@@ -464,10 +464,16 @@ class QTIApp {
     return card;
   }
 
-  // Set status for a post
+  // Set status for a post (toggle: click same status to clear)
   async setStatus(postId, status) {
-    this.sound.playForStatus(status);
-    await this.firebase.updateStatus(postId, status);
+    const currentStatus = this.posts[postId] ? this.posts[postId].status : 'none';
+    if (currentStatus === status) {
+      // Same status clicked - reset to none
+      await this.firebase.updateStatus(postId, 'none');
+    } else {
+      this.sound.playForStatus(status);
+      await this.firebase.updateStatus(postId, status);
+    }
   }
 
   // Confirm delete
