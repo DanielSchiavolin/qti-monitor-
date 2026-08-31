@@ -395,22 +395,27 @@ class QTIApp {
   }
 
   checkAlerts() {
-    let pendingCount = 0;
+    let segPending = 0;
+    let limpPending = 0;
+
     Object.values(this.posts).forEach(post => {
       const card = document.getElementById(`card-${post.id}`);
       if (!card) return;
 
       if (this.shouldFlash(post)) {
         card.classList.add('flashing');
-        pendingCount++;
+        const isLimpeza = post.category === 'Limpeza' || post.type === 'limpeza' || post.category.toLowerCase().includes('limpeza');
+        if (isLimpeza) limpPending++;
+        else segPending++;
       } else {
         card.classList.remove('flashing');
       }
     });
 
     const badge = document.getElementById('pending-count');
-    if (pendingCount > 0) {
-      badge.textContent = `${pendingCount} pendente${pendingCount > 1 ? 's' : ''}`;
+    const totalPending = segPending + limpPending;
+    if (totalPending > 0) {
+      badge.textContent = `🛡️ ${segPending} | 🧹 ${limpPending}`;
       badge.className = 'pending-badge';
     } else {
       badge.textContent = '✓ Todos OK';
@@ -611,7 +616,7 @@ class QTIApp {
     };
   }
 
-  // Export to WhatsApp (ONLY operating posts for current shift & day)
+  // Export to WhatsApp (Separates Segurança and Limpeza with individual summaries)
   exportWhatsApp() {
     const now = new Date();
     const dateStr = now.toLocaleDateString('pt-BR');
@@ -623,48 +628,94 @@ class QTIApp {
     message += `📅 ${dateStr} às ${timeStr}\n`;
     message += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
-    const categories = {};
-    Object.values(this.posts).forEach(post => {
-      if (!this.isOperatingNow(post)) return;
-
-      if (!categories[post.category]) categories[post.category] = [];
-      categories[post.category].push(post);
-    });
-
     const statusEmojis = {
-      'none': '⚪ Aguardando',
+      'none': '⚪ Pendente',
       'sem_contato': '🔴 Sem Contato',
       'qti': '🟡 QTI',
       'chegou': '🟢 Chegou'
     };
 
-    let totalIncluded = 0;
-    Object.entries(categories).forEach(([catName, posts]) => {
-      if (posts.length === 0) return;
-      message += `*${catName}*\n`;
-      posts.forEach(post => {
-        message += `  ${statusEmojis[post.status] || '⚪ Aguardando'} - ${post.name}\n`;
-        totalIncluded++;
-      });
-      message += `\n`;
+    const segurancaPosts = [];
+    const limpezaPosts = [];
+
+    Object.values(this.posts).forEach(post => {
+      if (!this.isOperatingNow(post)) return;
+
+      const isLimpeza = post.category === 'Limpeza' || post.type === 'limpeza' || post.category.toLowerCase().includes('limpeza');
+      if (isLimpeza) {
+        limpezaPosts.push(post);
+      } else {
+        segurancaPosts.push(post);
+      }
     });
 
-    if (totalIncluded === 0) {
+    if (segurancaPosts.length === 0 && limpezaPosts.length === 0) {
       this.showToast('Nenhum posto operando neste turno para exportar.', 'error');
       return;
     }
 
-    const operatingPosts = Object.values(this.posts).filter(p => this.isOperatingNow(p));
-    const chegou = operatingPosts.filter(p => p.status === 'chegou').length;
-    const qti = operatingPosts.filter(p => p.status === 'qti').length;
-    const semContato = operatingPosts.filter(p => p.status === 'sem_contato').length;
-    const pending = operatingPosts.filter(p => p.status === 'none').length;
+    const groupByCategory = (postList) => {
+      const grouped = {};
+      postList.forEach(post => {
+        if (!grouped[post.category]) grouped[post.category] = [];
+        grouped[post.category].push(post);
+      });
+      return grouped;
+    };
+
+    // 1. SEGURANÇA SECTION
+    if (segurancaPosts.length > 0) {
+      message += `🛡️ *SEGURANÇA*\n`;
+      const segGrouped = groupByCategory(segurancaPosts);
+      Object.entries(segGrouped).forEach(([catName, posts]) => {
+        message += `*${catName}*\n`;
+        posts.forEach(post => {
+          message += `  ${statusEmojis[post.status] || '⚪ Pendente'} - ${post.name}\n`;
+        });
+      });
+      message += `\n`;
+    }
+
+    // 2. LIMPEZA SECTION
+    if (limpezaPosts.length > 0) {
+      message += `🧹 *LIMPEZA*\n`;
+      const limpGrouped = groupByCategory(limpezaPosts);
+      Object.entries(limpGrouped).forEach(([catName, posts]) => {
+        message += `*${catName}*\n`;
+        posts.forEach(post => {
+          message += `  ${statusEmojis[post.status] || '⚪ Pendente'} - ${post.name}\n`;
+        });
+      });
+      message += `\n`;
+    }
 
     message += `━━━━━━━━━━━━━━━━━━━━━\n`;
-    message += `📊 *Resumo Turno ${shiftName}:*\n`;
-    message += `🟢 Chegou: ${chegou} | 🟡 QTI: ${qti}\n`;
-    message += `🔴 Sem Contato: ${semContato} | ⚪ Pendente: ${pending}\n`;
-    message += `Total Ativos no Turno: ${operatingPosts.length}\n`;
+
+    // 3. RESUMO SEGURANÇA
+    if (segurancaPosts.length > 0) {
+      const segChegou = segurancaPosts.filter(p => p.status === 'chegou').length;
+      const segQti = segurancaPosts.filter(p => p.status === 'qti').length;
+      const segSemContato = segurancaPosts.filter(p => p.status === 'sem_contato').length;
+      const segPendente = segurancaPosts.filter(p => p.status === 'none').length;
+
+      message += `📊 *RESUMO SEGURANÇA:*\n`;
+      message += `🟢 Chegou: ${segChegou} | 🟡 QTI: ${segQti}\n`;
+      message += `🔴 Sem Contato: ${segSemContato} | ⚪ Pendente: ${segPendente}\n`;
+      message += `Total Segurança: ${segurancaPosts.length}\n\n`;
+    }
+
+    // 4. RESUMO LIMPEZA
+    if (limpezaPosts.length > 0) {
+      const limpChegou = limpezaPosts.filter(p => p.status === 'chegou').length;
+      const limpQti = limpezaPosts.filter(p => p.status === 'qti').length;
+      const limpSemContato = limpezaPosts.filter(p => p.status === 'sem_contato').length;
+      const limpPendente = limpezaPosts.filter(p => p.status === 'none').length;
+
+      message += `🧹 *RESUMO LIMPEZA:*\n`;
+      message += `🟢 Chegou: ${limpChegou} | 🟡 QTI: ${limpQti}\n`;
+      message += `🔴 Sem Contato: ${limpSemContato} | ⚪ Pendente: ${limpPendente}\n`;
+      message += `Total Limpeza: ${limpezaPosts.length}\n`;
+    }
 
     const encoded = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${encoded}`, '_blank');
