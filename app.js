@@ -1,29 +1,28 @@
 const DEFAULT_POSTS = [
   // Segurança Econ
-  { id: 'econ_giovanni', name: 'Giovanni Gronchi', category: 'Segurança Econ', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '06:00' },
-  { id: 'econ_mascote', name: 'Mascote', category: 'Segurança Econ', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '06:00' },
-  { id: 'econ_tumiaru', name: 'Tumiaru', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '18:00' },
-  { id: 'econ_sabara', name: 'Sabará', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '18:00' },
-  { id: 'econ_diadema', name: 'Diadema', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '18:00' },
-  { id: 'econ_oswaldo', name: 'Oswaldo', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '18:00' },
-  { id: 'econ_suzana', name: 'Suzana', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '18:00' },
+  { id: 'econ_giovanni', name: 'Giovanni Gronchi', category: 'Segurança Econ', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
+  { id: 'econ_mascote', name: 'Mascote', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
+  { id: 'econ_tumiaru', name: 'Tumiaru', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
+  { id: 'econ_sabara', name: 'Sabará', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
+  { id: 'econ_diadema', name: 'Diadema', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
+  { id: 'econ_oswaldo', name: 'Oswaldo', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
+  { id: 'econ_suzana', name: 'Suzana', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
   // Segurança Nurban
-  { id: 'nurban_bosque', name: 'Bosque', category: 'Segurança Nurban', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '06:00' },
-  { id: 'nurban_palmeiras', name: 'Palmeiras', category: 'Segurança Nurban', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '06:00' },
-  { id: 'nurban_cesario', name: 'Cesario', category: 'Segurança Nurban', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '06:00' },
-  { id: 'nurban_joao', name: 'Joao Ramalho', category: 'Segurança Nurban', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '18:00' },
-  { id: 'nurban_venancio', name: 'Venancio', category: 'Segurança Nurban', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '18:00' },
+  { id: 'nurban_bosque', name: 'Bosque', category: 'Segurança Nurban', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
+  { id: 'nurban_palmeiras', name: 'Palmeiras', category: 'Segurança Nurban', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
+  { id: 'nurban_cesario', name: 'Cesario', category: 'Segurança Nurban', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
+  { id: 'nurban_joao', name: 'Joao Ramalho', category: 'Segurança Nurban', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
+  { id: 'nurban_venancio', name: 'Venancio', category: 'Segurança Nurban', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
   // Segurança Kallas
-  { id: 'kallas_central', name: 'Central Kallas', category: 'Segurança Kallas', type: 'diurno', days: [1,3,5], alertTime: '06:00' },
+  { id: 'kallas_central', name: 'Central Kallas', category: 'Segurança Kallas', type: 'diurno', days: [1,3,5], alertTime: '04:00' },
   // Segurança Cursino
-  { id: 'cursino_terreno', name: 'Terreno Cursino', category: 'Segurança Cursino', type: 'diurno', days: [1,2,3,4,5,6], alertTime: '06:00' },
+  { id: 'cursino_terreno', name: 'Terreno Cursino', category: 'Segurança Cursino', type: 'diurno', days: [1,2,3,4,5,6], alertTime: '04:00' },
   // Limpeza
-  { id: 'limp_clinica', name: 'Clinica', category: 'Limpeza', type: 'limpeza', days: [0,1,2,3,4,5,6], alertTime: '06:00' },
-  { id: 'limp_campo_belo', name: 'Campo Belo', category: 'Limpeza', type: 'limpeza', days: [3], alertTime: '06:00' },
-  { id: 'limp_palmeiras1', name: 'Palmeiras 1', category: 'Limpeza', type: 'limpeza', days: [0,1,2,3,4,5,6], alertTime: '06:00' },
-  { id: 'limp_palmeiras2', name: 'Palmeiras 2', category: 'Limpeza', type: 'limpeza', days: [0,1,2,4,5,6], alertTime: '06:00' },
+  { id: 'limp_clinica', name: 'Clinica', category: 'Limpeza', type: 'limpeza', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
+  { id: 'limp_campo_belo', name: 'Campo Belo', category: 'Limpeza', type: 'limpeza', days: [3], alertTime: '04:00' },
+  { id: 'limp_palmeiras', name: 'Palmeiras', category: 'Limpeza', type: 'limpeza', days: [1,2,4,5,6], alertTime: '04:00' },
   { id: 'limp_cesario', name: 'Cesario (Limpeza)', category: 'Limpeza', type: 'limpeza', days: [1,2,4,5,6], alertTime: '06:30' },
-  { id: 'limp_bosque', name: 'Bosque', category: 'Limpeza', type: 'limpeza', days: [0,1,2,3,4,5,6], alertTime: '06:00' },
+  { id: 'limp_bosque', name: 'Bosque', category: 'Limpeza', type: 'limpeza', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
 ];
 
 class SoundManager {
@@ -37,7 +36,7 @@ class SoundManager {
     }
   }
 
-  // Red - sem contato: Low warning buzz (200Hz, 150ms, slight distortion feel)
+  // Red - sem contato: Low warning buzz
   playSemContato() {
     this.init();
     const ctx = this.audioCtx;
@@ -54,11 +53,10 @@ class SoundManager {
     osc.stop(ctx.currentTime + 0.2);
   }
 
-  // Yellow - QTI: Medium notification blip (440Hz + 550Hz, 200ms, double beep)
+  // Yellow - QTI: Medium notification double beep
   playQTI() {
     this.init();
     const ctx = this.audioCtx;
-    // First beep
     const osc1 = ctx.createOscillator();
     const gain1 = ctx.createGain();
     osc1.connect(gain1);
@@ -69,7 +67,7 @@ class SoundManager {
     gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
     osc1.start(ctx.currentTime);
     osc1.stop(ctx.currentTime + 0.1);
-    // Second beep
+
     const osc2 = ctx.createOscillator();
     const gain2 = ctx.createGain();
     osc2.connect(gain2);
@@ -82,7 +80,7 @@ class SoundManager {
     osc2.stop(ctx.currentTime + 0.22);
   }
 
-  // Green - chegou: Positive ascending chime (600Hz -> 800Hz -> 1000Hz, cheerful)
+  // Green - chegou: Positive ascending chime
   playChegou() {
     this.init();
     const ctx = this.audioCtx;
@@ -114,6 +112,7 @@ class FirebaseManager {
   constructor() {
     this.db = null;
     this.postsRef = null;
+    this.systemRef = null;
     this.isConnected = false;
   }
 
@@ -133,6 +132,7 @@ class FirebaseManager {
       }
       this.db = firebase.database();
       this.postsRef = this.db.ref('posts');
+      this.systemRef = this.db.ref('system');
       this.isConnected = true;
 
       // Monitor connection
@@ -149,29 +149,56 @@ class FirebaseManager {
     }
   }
 
-  // Initialize posts in Firebase from DEFAULT_POSTS
+  // Initialize and sync posts in Firebase from DEFAULT_POSTS
   async initializePosts() {
     const snapshot = await this.postsRef.once('value');
-    if (!snapshot.exists()) {
-      const postsData = {};
-      DEFAULT_POSTS.forEach(p => {
-        postsData[p.id] = {
-          ...p,
+    const existingData = snapshot.val() || {};
+
+    const updates = {};
+    // Remove obsolete posts if present in DB
+    if (existingData.limp_palmeiras1) updates['limp_palmeiras1'] = null;
+    if (existingData.limp_palmeiras2) updates['limp_palmeiras2'] = null;
+
+    // Ensure default posts exist & sync schedule/type definitions
+    DEFAULT_POSTS.forEach(defPost => {
+      if (!existingData[defPost.id]) {
+        updates[defPost.id] = {
+          ...defPost,
           status: 'none',
           lastUpdate: null,
           lastShiftReset: null
         };
-      });
-      await this.postsRef.set(postsData);
+      } else {
+        // Sync definition properties without overwriting status or lastUpdate
+        updates[`${defPost.id}/days`] = defPost.days;
+        updates[`${defPost.id}/type`] = defPost.type;
+        updates[`${defPost.id}/alertTime`] = defPost.alertTime;
+        updates[`${defPost.id}/name`] = defPost.name;
+        updates[`${defPost.id}/category`] = defPost.category;
+      }
+    });
+
+    if (Object.keys(updates).length > 0) {
+      await this.postsRef.update(updates);
     }
   }
 
-  // Listen for real-time changes
+  // Listen for real-time changes on posts
   onPostsChange(callback) {
     this.postsRef.on('value', (snapshot) => {
       const data = snapshot.val() || {};
       callback(data);
     });
+  }
+
+  // Get and set auto-reset key in Firebase
+  async getLastResetKey() {
+    const snap = await this.systemRef.child('lastResetKey').once('value');
+    return snap.val();
+  }
+
+  async setLastResetKey(key) {
+    await this.systemRef.child('lastResetKey').set(key);
   }
 
   // Update post status
@@ -197,7 +224,7 @@ class FirebaseManager {
     await this.postsRef.child(postId).remove();
   }
 
-  // Reset statuses for a shift
+  // Reset statuses for all posts
   async resetStatuses(postIds) {
     const updates = {};
     postIds.forEach(id => {
@@ -216,6 +243,7 @@ class QTIApp {
     this.posts = {};
     this.clockInterval = null;
     this.alertInterval = null;
+    this.autoResetInterval = null;
   }
 
   // Default Firebase configuration
@@ -234,7 +262,6 @@ class QTIApp {
     this.startClock();
     this.setupEventListeners();
 
-    // Use saved config or default config
     const config = this.firebase.getConfig() || QTIApp.DEFAULT_CONFIG;
     const success = this.firebase.init(config);
     if (success) {
@@ -242,6 +269,7 @@ class QTIApp {
       await this.firebase.initializePosts();
       this.firebase.onPostsChange((data) => this.onDataUpdate(data));
       this.startAlertChecker();
+      this.startAutoResetChecker();
     } else {
       this.showSetupModal();
     }
@@ -261,47 +289,103 @@ class QTIApp {
     this.clockInterval = setInterval(updateClock, 1000);
   }
 
-  // Check if a post should be active today
+  // Check if a post is scheduled for today (day of week)
   isActiveToday(post) {
-    const today = new Date().getDay(); // 0=Sunday
+    const today = new Date().getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
     return post.days && post.days.includes(today);
   }
 
-  // Get the current shift type based on time
+  // Get current shift name ('diurno' or 'noturno')
+  // Day shift: 04:00 AM to 15:59 PM
+  // Night shift: 16:00 PM to 03:59 AM
   getCurrentShift() {
     const hour = new Date().getHours();
-    // 6:00-17:59 = morning/day shift, 18:00-5:59 = night shift
-    return (hour >= 6 && hour < 18) ? 'diurno' : 'noturno';
+    return (hour >= 4 && hour < 16) ? 'diurno' : 'noturno';
   }
 
-  // Should this post be flashing?
-  shouldFlash(post) {
+  // Check if post is operating RIGHT NOW
+  isOperatingNow(post) {
     if (!this.isActiveToday(post)) return false;
-    if (post.status !== 'none') return false;
+
+    const currentMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+
+    if (post.type === 'noturno') {
+      // Night post operates from 16:00 PM (960 min) through overnight until 10:00 AM (600 min)
+      return currentMinutes >= 960 || currentMinutes < 600;
+    } else {
+      // Day/limpeza post operates from 04:00 AM (240 min) until 22:00 PM (1320 min)
+      return currentMinutes >= 240 && currentMinutes < 1320;
+    }
+  }
+
+  // Check if post should flash right now
+  shouldFlash(post) {
+    if (!this.isOperatingNow(post)) return false;
+    if (post.status && post.status !== 'none') return false;
 
     const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const currentTimeMinutes = hours * 60 + minutes;
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-    // Parse alert time
-    const [alertH, alertM] = (post.alertTime || '06:00').split(':').map(Number);
+    const [alertH, alertM] = (post.alertTime || (post.type === 'noturno' ? '16:00' : '04:00')).split(':').map(Number);
     const alertTimeMinutes = alertH * 60 + alertM;
 
-    if (post.type === 'limpeza') {
-      // Limpeza: only flash after morning alert time (alertTime, usually 6:00, or 6:30 for Cesario)
-      // Flash from alertTime until 12:00 (noon) - reasonable window for morning limpeza
-      return currentTimeMinutes >= alertTimeMinutes && currentTimeMinutes < 720;
-    } else if (post.type === 'noturno') {
-      // Noturno: only flash after 18:00
-      return currentTimeMinutes >= 1080; // 18:00 = 1080 minutes
+    if (post.type === 'noturno') {
+      // Night post starts flashing at 16:00 (960 min) until 10:00 AM next morning (600 min)
+      return currentMinutes >= alertTimeMinutes || currentMinutes < 600;
     } else {
-      // Diurno: flash after 6:00 during day shift
-      if (currentTimeMinutes >= 360 && currentTimeMinutes < 1080) {
-        return currentTimeMinutes >= alertTimeMinutes;
-      }
-      return false;
+      // Day/limpeza post starts flashing at 04:00 (240 min) or 06:30 (390 min) until 22:00 PM (1320 min)
+      return currentMinutes >= alertTimeMinutes && currentMinutes < 1320;
     }
+  }
+
+  // Calculate current auto-reset key for 10:00 AM and 22:00 PM schedule
+  getCurrentResetKey() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const dateStr = `${year}-${month}-${day}`;
+
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+    if (currentMinutes >= 600 && currentMinutes < 1320) {
+      // 10:00 AM (600 min) to 21:59 PM (1319 min) -> Cycle 10:00 AM
+      return `${dateStr}_10:00`;
+    } else if (currentMinutes >= 1320) {
+      // 22:00 PM (1320 min) to 23:59 PM -> Cycle 22:00 PM
+      return `${dateStr}_22:00`;
+    } else {
+      // 00:00 AM to 09:59 AM -> Belongs to yesterday's 22:00 PM cycle
+      const yesterday = new Date(now);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yYear = yesterday.getFullYear();
+      const yMonth = String(yesterday.getMonth() + 1).padStart(2, '0');
+      const yDay = String(yesterday.getDate()).padStart(2, '0');
+      return `${yYear}-${yMonth}-${yDay}_22:00`;
+    }
+  }
+
+  // Check and perform auto-reset at 10:00 AM and 22:00 PM
+  async checkAutoReset() {
+    if (!this.firebase.isConnected || !this.posts) return;
+
+    const targetKey = this.getCurrentResetKey();
+    const lastKey = await this.firebase.getLastResetKey();
+
+    if (lastKey !== targetKey) {
+      console.log(`Auto reset triggered! Previous: ${lastKey}, New target: ${targetKey}`);
+      const postIds = Object.keys(this.posts);
+      if (postIds.length > 0) {
+        await this.firebase.resetStatuses(postIds);
+      }
+      await this.firebase.setLastResetKey(targetKey);
+      this.showToast('🔄 Reset automático de turno (10:00 / 22:00) realizado!', 'info');
+    }
+  }
+
+  startAutoResetChecker() {
+    this.checkAutoReset();
+    this.autoResetInterval = setInterval(() => this.checkAutoReset(), 15000);
   }
 
   // Start checking for alerts every 30 seconds
@@ -324,7 +408,6 @@ class QTIApp {
       }
     });
 
-    // Update pending badge
     const badge = document.getElementById('pending-count');
     if (pendingCount > 0) {
       badge.textContent = `${pendingCount} pendente${pendingCount > 1 ? 's' : ''}`;
@@ -347,14 +430,12 @@ class QTIApp {
     const container = document.getElementById('posts-container');
     container.innerHTML = '';
 
-    // Group posts by category
     const categories = {};
     Object.values(this.posts).forEach(post => {
       if (!categories[post.category]) categories[post.category] = [];
       categories[post.category].push(post);
     });
 
-    // Category icons
     const categoryIcons = {
       'Segurança Econ': '🛡️',
       'Segurança Nurban': '🏢',
@@ -363,9 +444,7 @@ class QTIApp {
       'Limpeza': '🧹'
     };
 
-    // Render each category
     const categoryOrder = ['Segurança Econ', 'Segurança Nurban', 'Segurança Kallas', 'Segurança Cursino', 'Limpeza'];
-    // Include any categories not in the predefined order
     Object.keys(categories).forEach(cat => {
       if (!categoryOrder.includes(cat)) categoryOrder.push(cat);
     });
@@ -377,14 +456,13 @@ class QTIApp {
       const section = document.createElement('div');
       section.className = 'category-section';
 
-      // Count active posts
-      const activeCount = posts.filter(p => this.isActiveToday(p)).length;
+      const activeCount = posts.filter(p => this.isOperatingNow(p)).length;
 
       section.innerHTML = `
         <div class="category-header">
           <div class="category-icon">${categoryIcons[catName] || '📌'}</div>
           <h2 class="category-title">${catName}</h2>
-          <span class="category-count">${activeCount}/${posts.length} ativos hoje</span>
+          <span class="category-count">${activeCount}/${posts.length} no turno</span>
         </div>
         <div class="posts-grid"></div>
       `;
@@ -402,9 +480,10 @@ class QTIApp {
 
   // Create a single post card element
   createPostCard(post) {
+    const isOperating = this.isOperatingNow(post);
     const card = document.createElement('div');
     card.id = `card-${post.id}`;
-    card.className = `post-card${post.status !== 'none' ? ` status-${post.status.replace('_', '-')}` : ''}${!this.isActiveToday(post) ? ' inactive' : ''}`;
+    card.className = `post-card${post.status !== 'none' ? ` status-${post.status.replace('_', '-')}` : ''}${!isOperating ? ' inactive' : ''}`;
 
     const typeLabels = { diurno: 'Diurno', noturno: 'Noturno', limpeza: 'Limpeza' };
     const statusLabels = {
@@ -420,7 +499,20 @@ class QTIApp {
       'chegou': 'chegou'
     };
 
-    // Format schedule info
+    let displayStatusText = statusLabels[post.status] || 'Aguardando...';
+    let displayStatusClass = statusClasses[post.status] || 'none';
+
+    if (!isOperating) {
+      displayStatusClass = 'none';
+      if (!this.isActiveToday(post)) {
+        displayStatusText = '⛔ Folga Hoje';
+      } else if (post.type === 'noturno') {
+        displayStatusText = '🌙 Turno Noturno (16h)';
+      } else {
+        displayStatusText = '☀️ Turno Diurno (4h)';
+      }
+    }
+
     const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
     let scheduleText = '';
     if (post.days && post.days.length < 7) {
@@ -432,12 +524,13 @@ class QTIApp {
       scheduleText += ` · Alerta: ${post.alertTime}`;
     }
 
-    // Format last update time
     let lastUpdateText = '';
     if (post.lastUpdate) {
       const date = new Date(post.lastUpdate);
       lastUpdateText = `Atualizado: ${date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
     }
+
+    const disabledAttr = !isOperating ? 'disabled' : '';
 
     card.innerHTML = `
       <button class="btn-delete-post" onclick="app.confirmDelete('${post.id}', '${post.name}')" title="Deletar posto">✕</button>
@@ -446,15 +539,15 @@ class QTIApp {
         <span class="post-type-badge ${post.type}">${typeLabels[post.type] || post.type}</span>
       </div>
       <div class="post-schedule">${scheduleText}</div>
-      <div class="post-status-display ${statusClasses[post.status]}">${statusLabels[post.status]}</div>
+      <div class="post-status-display ${displayStatusClass}">${displayStatusText}</div>
       <div class="status-buttons">
-        <button class="btn-status btn-red${post.status === 'sem_contato' ? ' active' : ''}" onclick="app.setStatus('${post.id}', 'sem_contato')">
+        <button class="btn-status btn-red${post.status === 'sem_contato' ? ' active' : ''}" ${disabledAttr} onclick="app.setStatus('${post.id}', 'sem_contato')">
           🔴 Sem Contato
         </button>
-        <button class="btn-status btn-yellow${post.status === 'qti' ? ' active' : ''}" onclick="app.setStatus('${post.id}', 'qti')">
+        <button class="btn-status btn-yellow${post.status === 'qti' ? ' active' : ''}" ${disabledAttr} onclick="app.setStatus('${post.id}', 'qti')">
           🟡 QTI
         </button>
-        <button class="btn-status btn-green${post.status === 'chegou' ? ' active' : ''}" onclick="app.setStatus('${post.id}', 'chegou')">
+        <button class="btn-status btn-green${post.status === 'chegou' ? ' active' : ''}" ${disabledAttr} onclick="app.setStatus('${post.id}', 'chegou')">
           🟢 Chegou
         </button>
       </div>
@@ -466,9 +559,16 @@ class QTIApp {
 
   // Set status for a post (toggle: click same status to clear)
   async setStatus(postId, status) {
-    const currentStatus = this.posts[postId] ? this.posts[postId].status : 'none';
+    if (!this.posts[postId]) return;
+    const post = this.posts[postId];
+
+    if (!this.isOperatingNow(post)) {
+      this.showToast(`Posto "${post.name}" não opera neste turno/dia.`, 'error');
+      return;
+    }
+
+    const currentStatus = post.status || 'none';
     if (currentStatus === status) {
-      // Same status clicked - reset to none
       await this.firebase.updateStatus(postId, 'none');
     } else {
       this.sound.playForStatus(status);
@@ -511,19 +611,22 @@ class QTIApp {
     };
   }
 
-  // Export to WhatsApp
+  // Export to WhatsApp (ONLY operating posts for current shift & day)
   exportWhatsApp() {
     const now = new Date();
     const dateStr = now.toLocaleDateString('pt-BR');
     const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const currentShift = this.getCurrentShift();
+    const shiftName = currentShift === 'diurno' ? 'DIURNO' : 'NOTURNO';
 
-    let message = `🛡️ *FRONT SECURITY - Status Geral*\n`;
+    let message = `🛡️ *FRONT SECURITY - Status ${shiftName}*\n`;
     message += `📅 ${dateStr} às ${timeStr}\n`;
     message += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
     const categories = {};
     Object.values(this.posts).forEach(post => {
-      if (!this.isActiveToday(post)) return; // Skip inactive posts
+      if (!this.isOperatingNow(post)) return;
+
       if (!categories[post.category]) categories[post.category] = [];
       categories[post.category].push(post);
     });
@@ -535,26 +638,33 @@ class QTIApp {
       'chegou': '🟢 Chegou'
     };
 
+    let totalIncluded = 0;
     Object.entries(categories).forEach(([catName, posts]) => {
+      if (posts.length === 0) return;
       message += `*${catName}*\n`;
       posts.forEach(post => {
-        message += `  ${statusEmojis[post.status]} - ${post.name}\n`;
+        message += `  ${statusEmojis[post.status] || '⚪ Aguardando'} - ${post.name}\n`;
+        totalIncluded++;
       });
       message += `\n`;
     });
 
-    // Summary
-    const allActive = Object.values(this.posts).filter(p => this.isActiveToday(p));
-    const chegou = allActive.filter(p => p.status === 'chegou').length;
-    const qti = allActive.filter(p => p.status === 'qti').length;
-    const semContato = allActive.filter(p => p.status === 'sem_contato').length;
-    const pending = allActive.filter(p => p.status === 'none').length;
+    if (totalIncluded === 0) {
+      this.showToast('Nenhum posto operando neste turno para exportar.', 'error');
+      return;
+    }
+
+    const operatingPosts = Object.values(this.posts).filter(p => this.isOperatingNow(p));
+    const chegou = operatingPosts.filter(p => p.status === 'chegou').length;
+    const qti = operatingPosts.filter(p => p.status === 'qti').length;
+    const semContato = operatingPosts.filter(p => p.status === 'sem_contato').length;
+    const pending = operatingPosts.filter(p => p.status === 'none').length;
 
     message += `━━━━━━━━━━━━━━━━━━━━━\n`;
-    message += `📊 *Resumo:*\n`;
+    message += `📊 *Resumo Turno ${shiftName}:*\n`;
     message += `🟢 Chegou: ${chegou} | 🟡 QTI: ${qti}\n`;
     message += `🔴 Sem Contato: ${semContato} | ⚪ Pendente: ${pending}\n`;
-    message += `Total Ativos: ${allActive.length}\n`;
+    message += `Total Ativos no Turno: ${operatingPosts.length}\n`;
 
     const encoded = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${encoded}`, '_blank');
@@ -566,8 +676,7 @@ class QTIApp {
     document.getElementById('new-post-name').value = '';
     document.getElementById('new-post-category').value = 'Segurança Econ';
     document.getElementById('new-post-type').value = 'diurno';
-    document.getElementById('new-post-alert').value = '06:00';
-    // Check all days by default
+    document.getElementById('new-post-alert').value = '04:00';
     document.querySelectorAll('.day-cb').forEach(cb => cb.checked = true);
   }
 
@@ -584,7 +693,6 @@ class QTIApp {
     }
 
     const category = document.getElementById('new-post-category').value;
-    // Allow custom category
     const customCategory = document.getElementById('new-post-custom-category');
     const finalCategory = category === 'custom' ? customCategory.value.trim() : category;
 
@@ -606,7 +714,6 @@ class QTIApp {
       return;
     }
 
-    // Generate ID
     const id = name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_') + '_' + Date.now();
 
     const post = { id, name, category: finalCategory, type, days, alertTime };
@@ -628,18 +735,11 @@ class QTIApp {
   async saveFirebaseConfig() {
     let input = document.getElementById('firebase-config-input').value.trim();
     try {
-      // Clean up Firebase's JavaScript format to valid JSON
-      // Remove "const firebaseConfig = " prefix if present
       input = input.replace(/^(const|var|let)\s+\w+\s*=\s*/, '');
-      // Remove trailing semicolon
       input = input.replace(/;\s*$/, '');
-      // Replace single quotes with double quotes
       input = input.replace(/'/g, '"');
-      // Add quotes to unquoted keys (e.g., apiKey: -> "apiKey":)
       input = input.replace(/(\s*)(\w+)\s*:/g, '$1"$2":');
-      // Fix double-quoted keys that were already quoted
       input = input.replace(/""/g, '"');
-      // Remove trailing commas before closing brace
       input = input.replace(/,\s*}/g, '}');
 
       const config = JSON.parse(input);
@@ -653,6 +753,7 @@ class QTIApp {
         await this.firebase.initializePosts();
         this.firebase.onPostsChange((data) => this.onDataUpdate(data));
         this.startAlertChecker();
+        this.startAutoResetChecker();
         this.hideSetupModal();
         this.showToast('Firebase conectado com sucesso! 🎉', 'success');
       } else {
@@ -699,23 +800,20 @@ class QTIApp {
     document.getElementById('submit-new-post').addEventListener('click', () => this.addNewPost());
     document.getElementById('config-btn').addEventListener('click', () => this.showConfigModal());
 
-    // Category select change - show/hide custom input
     document.getElementById('new-post-category').addEventListener('change', (e) => {
       const customGroup = document.getElementById('custom-category-group');
       customGroup.style.display = e.target.value === 'custom' ? 'block' : 'none';
     });
 
-    // Type select change - update default alert time
     document.getElementById('new-post-type').addEventListener('change', (e) => {
       const alertInput = document.getElementById('new-post-alert');
       if (e.target.value === 'noturno') {
-        alertInput.value = '18:00';
+        alertInput.value = '16:00';
       } else {
-        alertInput.value = '06:00';
+        alertInput.value = '04:00';
       }
     });
 
-    // Close modals on overlay click
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
       overlay.addEventListener('click', (e) => {
         if (e.target === overlay) {

@@ -168,23 +168,14 @@ body {
 }
 
 .post-card.inactive {
-  opacity: 0.4;
+  opacity: 0.45;
   filter: grayscale(0.5);
 }
 
-.post-card.inactive::after {
-  content: 'Não opera hoje';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.8);
-  color: var(--white);
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  z-index: 5;
-  font-size: 0.85rem;
+.post-card.inactive .btn-status {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .post-card.status-sem-contato {
