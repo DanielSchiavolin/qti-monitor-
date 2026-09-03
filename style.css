@@ -925,3 +925,24 @@ body {
   text-align: right;
   font-style: italic;
 }
+
+.alert-banner {
+  background: rgba(231, 76, 60, 0.25);
+  border: 1px solid #E74C3C;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.alert-banner a {
+  color: #F5A623;
+  font-weight: 700;
+  text-decoration: underline;
+}

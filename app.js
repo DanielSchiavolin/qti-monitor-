@@ -32,13 +32,18 @@ class SoundManager {
 
   init() {
     if (!this.audioCtx) {
-      this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      try {
+        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      } catch (e) {
+        console.warn('Web Audio not supported:', e);
+      }
     }
   }
 
   // Red - sem contato: Low warning buzz
   playSemContato() {
     this.init();
+    if (!this.audioCtx) return;
     const ctx = this.audioCtx;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -56,6 +61,7 @@ class SoundManager {
   // Yellow - QTI: Medium notification double beep
   playQTI() {
     this.init();
+    if (!this.audioCtx) return;
     const ctx = this.audioCtx;
     const osc1 = ctx.createOscillator();
     const gain1 = ctx.createGain();
@@ -83,6 +89,7 @@ class SoundManager {
   // Green - chegou: Positive ascending chime
   playChegou() {
     this.init();
+    if (!this.audioCtx) return;
     const ctx = this.audioCtx;
     const notes = [600, 800, 1000];
     notes.forEach((freq, i) => {
@@ -138,8 +145,10 @@ class FirebaseManager {
       // Monitor connection
       this.db.ref('.info/connected').on('value', (snap) => {
         this.isConnected = snap.val() === true;
-        document.getElementById('connection-status').className = this.isConnected ? 'conn-dot connected' : 'conn-dot disconnected';
-        document.getElementById('connection-text').textContent = this.isConnected ? 'Online' : 'Offline';
+        const statusEl = document.getElementById('connection-status');
+        const textEl = document.getElementById('connection-text');
+        if (statusEl) statusEl.className = this.isConnected ? 'conn-dot connected' : 'conn-dot disconnected';
+        if (textEl) textEl.textContent = this.isConnected ? 'Online' : 'Offline';
       });
 
       return true;
@@ -151,58 +160,83 @@ class FirebaseManager {
 
   // Initialize and sync posts in Firebase from DEFAULT_POSTS
   async initializePosts() {
-    const snapshot = await this.postsRef.once('value');
-    const existingData = snapshot.val() || {};
+    try {
+      const snapshot = await this.postsRef.once('value');
+      const existingData = snapshot.val() || {};
 
-    const updates = {};
-    // Remove obsolete posts if present in DB
-    if (existingData.limp_palmeiras1) updates['limp_palmeiras1'] = null;
-    if (existingData.limp_palmeiras2) updates['limp_palmeiras2'] = null;
+      const updates = {};
+      // Remove obsolete posts if present in DB
+      if (existingData.limp_palmeiras1) updates['limp_palmeiras1'] = null;
+      if (existingData.limp_palmeiras2) updates['limp_palmeiras2'] = null;
 
-    // Ensure default posts exist & sync schedule/type definitions
-    DEFAULT_POSTS.forEach(defPost => {
-      if (!existingData[defPost.id]) {
-        updates[defPost.id] = {
-          ...defPost,
-          status: 'none',
-          lastUpdate: null,
-          lastShiftReset: null
-        };
-      } else {
-        // Sync definition properties without overwriting status or lastUpdate
-        updates[`${defPost.id}/days`] = defPost.days;
-        updates[`${defPost.id}/type`] = defPost.type;
-        updates[`${defPost.id}/alertTime`] = defPost.alertTime;
-        updates[`${defPost.id}/name`] = defPost.name;
-        updates[`${defPost.id}/category`] = defPost.category;
+      // Ensure default posts exist & sync schedule/type definitions
+      DEFAULT_POSTS.forEach(defPost => {
+        if (!existingData[defPost.id]) {
+          updates[defPost.id] = {
+            ...defPost,
+            status: 'none',
+            lastUpdate: null,
+            lastShiftReset: null
+          };
+        } else {
+          // Sync definition properties without overwriting status or lastUpdate
+          updates[`${defPost.id}/days`] = defPost.days;
+          updates[`${defPost.id}/type`] = defPost.type;
+          updates[`${defPost.id}/alertTime`] = defPost.alertTime;
+          updates[`${defPost.id}/name`] = defPost.name;
+          updates[`${defPost.id}/category`] = defPost.category;
+        }
+      });
+
+      if (Object.keys(updates).length > 0) {
+        await this.postsRef.update(updates);
       }
-    });
-
-    if (Object.keys(updates).length > 0) {
-      await this.postsRef.update(updates);
+      return true;
+    } catch (err) {
+      console.error('Firebase initializePosts error:', err);
+      if (err && err.message && (err.message.includes('permission_denied') || err.message.includes('Permission denied'))) {
+        if (window.app) window.app.showPermissionErrorBanner();
+      }
+      return false;
     }
   }
 
-  // Listen for real-time changes on posts
-  onPostsChange(callback) {
+  // Listen for real-time changes on posts with error callback
+  onPostsChange(callback, errorCallback) {
+    if (!this.postsRef) return;
     this.postsRef.on('value', (snapshot) => {
       const data = snapshot.val() || {};
       callback(data);
+    }, (error) => {
+      console.error('Firebase onPostsChange error:', error);
+      if (errorCallback) errorCallback(error);
     });
   }
 
   // Get and set auto-reset key in Firebase
   async getLastResetKey() {
-    const snap = await this.systemRef.child('lastResetKey').once('value');
-    return snap.val();
+    if (!this.systemRef) return null;
+    try {
+      const snap = await this.systemRef.child('lastResetKey').once('value');
+      return snap.val();
+    } catch (e) {
+      console.warn('getLastResetKey error:', e);
+      return null;
+    }
   }
 
   async setLastResetKey(key) {
-    await this.systemRef.child('lastResetKey').set(key);
+    if (!this.systemRef) return;
+    try {
+      await this.systemRef.child('lastResetKey').set(key);
+    } catch (e) {
+      console.warn('setLastResetKey error:', e);
+    }
   }
 
   // Update post status
   async updateStatus(postId, status) {
+    if (!this.postsRef) return;
     await this.postsRef.child(postId).update({
       status: status,
       lastUpdate: new Date().toISOString()
@@ -211,6 +245,7 @@ class FirebaseManager {
 
   // Add new post
   async addPost(post) {
+    if (!this.postsRef) return;
     await this.postsRef.child(post.id).set({
       ...post,
       status: 'none',
@@ -221,11 +256,13 @@ class FirebaseManager {
 
   // Delete post
   async deletePost(postId) {
+    if (!this.postsRef) return;
     await this.postsRef.child(postId).remove();
   }
 
   // Reset statuses for all posts
   async resetStatuses(postIds) {
+    if (!this.postsRef) return;
     const updates = {};
     postIds.forEach(id => {
       updates[`${id}/status`] = 'none';
@@ -257,21 +294,93 @@ class QTIApp {
     appId: "1:390287906809:web:d2428c29ac936f8bc18f28"
   };
 
+  // Load initial posts immediately from localStorage or defaults
+  loadInitialPosts() {
+    const saved = localStorage.getItem('qti_posts');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed && Object.keys(parsed).length > 0) return parsed;
+      } catch (e) {}
+    }
+    const initial = {};
+    DEFAULT_POSTS.forEach(p => {
+      initial[p.id] = {
+        ...p,
+        status: 'none',
+        lastUpdate: null,
+        lastShiftReset: null
+      };
+    });
+    return initial;
+  }
+
   // Initialize the app
   async init() {
     this.startClock();
     this.setupEventListeners();
 
+    // 1. INSTANT RENDER: Immediately render local posts so the screen is NEVER blank or stuck!
+    this.posts = this.loadInitialPosts();
+    this.renderPosts();
+    this.checkAlerts();
+
+    // 2. Connect to Firebase in the background
     const config = this.firebase.getConfig() || QTIApp.DEFAULT_CONFIG;
     const success = this.firebase.init(config);
     if (success) {
       this.firebase.saveConfig(config);
-      await this.firebase.initializePosts();
-      this.firebase.onPostsChange((data) => this.onDataUpdate(data));
+
+      // Try syncing with Firebase
+      try {
+        await this.firebase.initializePosts();
+      } catch (err) {
+        console.warn('initializePosts warning:', err);
+      }
+
+      this.firebase.onPostsChange(
+        (data) => {
+          if (data && Object.keys(data).length > 0) {
+            this.onDataUpdate(data);
+          }
+        },
+        (error) => {
+          console.error('Firebase sync error:', error);
+          if (error && error.message && (error.message.includes('permission_denied') || error.message.includes('Permission denied'))) {
+            this.showPermissionErrorBanner();
+          }
+        }
+      );
+
       this.startAlertChecker();
       this.startAutoResetChecker();
     } else {
       this.showSetupModal();
+    }
+  }
+
+  // Show banner if Firebase rules expired
+  showPermissionErrorBanner() {
+    let banner = document.getElementById('firebase-permission-banner');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'firebase-permission-banner';
+      banner.className = 'alert-banner';
+      banner.innerHTML = `
+        <div>
+          <strong>⚠️ Regras do Firebase Expiradas (Modo Teste de 30 dias)</strong><br>
+          <span style="font-size:0.75rem; opacity:0.9;">
+            O app está rodando localmente. Para reativar a sincronização online da equipe: acesse o 
+            <a href="https://console.firebase.google.com/project/front-security-qti/database/rules" target="_blank">Firebase Console ➔ Realtime Database ➔ Regras</a>
+            e troque para <code>".read": true, ".write": true</code>.
+          </span>
+        </div>
+        <button onclick="this.parentElement.remove()" style="background:none;border:none;color:#FFF;font-size:1.1rem;cursor:pointer;">✕</button>
+      `;
+      const container = document.getElementById('posts-container');
+      if (container) {
+        container.prepend(banner);
+      }
     }
   }
 
@@ -280,10 +389,12 @@ class QTIApp {
     const updateClock = () => {
       const now = new Date();
       const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      document.getElementById('clock').textContent = timeStr;
+      const clockEl = document.getElementById('clock');
+      if (clockEl) clockEl.textContent = timeStr;
 
       const dateStr = now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
-      document.getElementById('current-date').textContent = dateStr;
+      const dateEl = document.getElementById('current-date');
+      if (dateEl) dateEl.textContent = dateStr;
     };
     updateClock();
     this.clockInterval = setInterval(updateClock, 1000);
@@ -296,8 +407,6 @@ class QTIApp {
   }
 
   // Get current shift name ('diurno' or 'noturno')
-  // Day shift: 04:00 AM to 15:59 PM
-  // Night shift: 16:00 PM to 03:59 AM
   getCurrentShift() {
     const hour = new Date().getHours();
     return (hour >= 4 && hour < 16) ? 'diurno' : 'noturno';
@@ -369,17 +478,21 @@ class QTIApp {
   async checkAutoReset() {
     if (!this.firebase.isConnected || !this.posts) return;
 
-    const targetKey = this.getCurrentResetKey();
-    const lastKey = await this.firebase.getLastResetKey();
+    try {
+      const targetKey = this.getCurrentResetKey();
+      const lastKey = await this.firebase.getLastResetKey();
 
-    if (lastKey !== targetKey) {
-      console.log(`Auto reset triggered! Previous: ${lastKey}, New target: ${targetKey}`);
-      const postIds = Object.keys(this.posts);
-      if (postIds.length > 0) {
-        await this.firebase.resetStatuses(postIds);
+      if (lastKey !== targetKey) {
+        console.log(`Auto reset triggered! Previous: ${lastKey}, New target: ${targetKey}`);
+        const postIds = Object.keys(this.posts);
+        if (postIds.length > 0) {
+          await this.firebase.resetStatuses(postIds);
+        }
+        await this.firebase.setLastResetKey(targetKey);
+        this.showToast('🔄 Reset automático de turno (10:00 / 22:00) realizado!', 'info');
       }
-      await this.firebase.setLastResetKey(targetKey);
-      this.showToast('🔄 Reset automático de turno (10:00 / 22:00) realizado!', 'info');
+    } catch (err) {
+      console.warn('checkAutoReset warning:', err);
     }
   }
 
@@ -413,19 +526,22 @@ class QTIApp {
     });
 
     const badge = document.getElementById('pending-count');
-    const totalPending = segPending + limpPending;
-    if (totalPending > 0) {
-      badge.textContent = `🛡️ ${segPending} | 🧹 ${limpPending}`;
-      badge.className = 'pending-badge';
-    } else {
-      badge.textContent = '✓ Todos OK';
-      badge.className = 'pending-badge all-clear';
+    if (badge) {
+      const totalPending = segPending + limpPending;
+      if (totalPending > 0) {
+        badge.textContent = `🛡️ ${segPending} | 🧹 ${limpPending}`;
+        badge.className = 'pending-badge';
+      } else {
+        badge.textContent = '✓ Todos OK';
+        badge.className = 'pending-badge all-clear';
+      }
     }
   }
 
   // Handle real-time data updates from Firebase
   onDataUpdate(data) {
     this.posts = data;
+    localStorage.setItem('qti_posts', JSON.stringify(data));
     this.renderPosts();
     this.checkAlerts();
   }
@@ -433,7 +549,15 @@ class QTIApp {
   // Render all posts grouped by category
   renderPosts() {
     const container = document.getElementById('posts-container');
+    if (!container) return;
+
+    // Preserve permission banner if present
+    const existingBanner = document.getElementById('firebase-permission-banner');
+
     container.innerHTML = '';
+    if (existingBanner) {
+      container.appendChild(existingBanner);
+    }
 
     const categories = {};
     Object.values(this.posts).forEach(post => {
@@ -562,7 +686,7 @@ class QTIApp {
     return card;
   }
 
-  // Set status for a post (toggle: click same status to clear)
+  // Set status for a post (optimistic UI + background sync)
   async setStatus(postId, status) {
     if (!this.posts[postId]) return;
     const post = this.posts[postId];
@@ -573,11 +697,27 @@ class QTIApp {
     }
 
     const currentStatus = post.status || 'none';
-    if (currentStatus === status) {
-      await this.firebase.updateStatus(postId, 'none');
-    } else {
-      this.sound.playForStatus(status);
-      await this.firebase.updateStatus(postId, status);
+    const newStatus = (currentStatus === status) ? 'none' : status;
+
+    if (newStatus !== 'none') {
+      this.sound.playForStatus(newStatus);
+    }
+
+    // 1. Instant local update
+    this.posts[postId].status = newStatus;
+    this.posts[postId].lastUpdate = new Date().toISOString();
+    localStorage.setItem('qti_posts', JSON.stringify(this.posts));
+    this.renderPosts();
+    this.checkAlerts();
+
+    // 2. Background sync with Firebase
+    try {
+      await this.firebase.updateStatus(postId, newStatus);
+    } catch (err) {
+      console.warn('Firebase status update failed, saved locally:', err);
+      if (err && err.message && (err.message.includes('permission_denied') || err.message.includes('Permission denied'))) {
+        this.showPermissionErrorBanner();
+      }
     }
   }
 
@@ -588,7 +728,14 @@ class QTIApp {
     overlay.classList.add('active');
 
     document.getElementById('confirm-yes').onclick = async () => {
-      await this.firebase.deletePost(postId);
+      delete this.posts[postId];
+      localStorage.setItem('qti_posts', JSON.stringify(this.posts));
+      this.renderPosts();
+      try {
+        await this.firebase.deletePost(postId);
+      } catch (e) {
+        console.warn('Delete failed in Firebase:', e);
+      }
       overlay.classList.remove('active');
       this.showToast(`Posto "${postName}" deletado`, 'success');
     };
@@ -606,7 +753,21 @@ class QTIApp {
 
     document.getElementById('confirm-yes').onclick = async () => {
       const postIds = Object.keys(this.posts);
-      await this.firebase.resetStatuses(postIds);
+      postIds.forEach(id => {
+        if (this.posts[id]) {
+          this.posts[id].status = 'none';
+          this.posts[id].lastUpdate = null;
+        }
+      });
+      localStorage.setItem('qti_posts', JSON.stringify(this.posts));
+      this.renderPosts();
+      this.checkAlerts();
+
+      try {
+        await this.firebase.resetStatuses(postIds);
+      } catch (e) {
+        console.warn('Reset failed in Firebase:', e);
+      }
       overlay.classList.remove('active');
       this.showToast('Todos os status foram resetados', 'info');
     };
@@ -767,8 +928,17 @@ class QTIApp {
 
     const id = name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_') + '_' + Date.now();
 
-    const post = { id, name, category: finalCategory, type, days, alertTime };
-    await this.firebase.addPost(post);
+    const post = { id, name, category: finalCategory, type, days, alertTime, status: 'none', lastUpdate: null };
+    this.posts[id] = post;
+    localStorage.setItem('qti_posts', JSON.stringify(this.posts));
+    this.renderPosts();
+
+    try {
+      await this.firebase.addPost(post);
+    } catch (e) {
+      console.warn('Firebase addPost failed:', e);
+    }
+
     this.hideAddPostModal();
     this.showToast(`Posto "${name}" adicionado com sucesso`, 'success');
   }
@@ -826,6 +996,7 @@ class QTIApp {
   // Toast notifications
   showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');
+    if (!container) return;
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.textContent = message;
@@ -877,4 +1048,5 @@ class QTIApp {
 
 // Initialize app when DOM is ready
 const app = new QTIApp();
+window.app = app;
 document.addEventListener('DOMContentLoaded', () => app.init());
