@@ -1,28 +1,28 @@
 const DEFAULT_POSTS = [
   // Segurança Econ
-  { id: 'econ_giovanni', name: 'Giovanni Gronchi', category: 'Segurança Econ', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
-  { id: 'econ_mascote', name: 'Mascote', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
-  { id: 'econ_tumiaru', name: 'Tumiaru', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
-  { id: 'econ_sabara', name: 'Sabará', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
-  { id: 'econ_diadema', name: 'Diadema', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
-  { id: 'econ_oswaldo', name: 'Oswaldo', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
-  { id: 'econ_suzana', name: 'Suzana', category: 'Segurança Econ', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
+  { id: 'econ_giovanni', name: 'Giovanni Gronchi', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
+  { id: 'econ_mascote', name: 'Mascote', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
+  { id: 'econ_tumiaru', name: 'Tumiaru', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
+  { id: 'econ_sabara', name: 'Sabará', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
+  { id: 'econ_diadema', name: 'Diadema', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
+  { id: 'econ_oswaldo', name: 'Oswaldo', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
+  { id: 'econ_suzana', name: 'Suzana', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
   // Segurança Nurban
-  { id: 'nurban_bosque', name: 'Bosque', category: 'Segurança Nurban', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
-  { id: 'nurban_palmeiras', name: 'Palmeiras', category: 'Segurança Nurban', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
-  { id: 'nurban_cesario', name: 'Cesario', category: 'Segurança Nurban', type: 'diurno', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
-  { id: 'nurban_joao', name: 'Joao Ramalho', category: 'Segurança Nurban', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
-  { id: 'nurban_venancio', name: 'Venancio', category: 'Segurança Nurban', type: 'noturno', days: [0,1,2,3,4,5,6], alertTime: '16:00' },
+  { id: 'nurban_bosque', name: 'Bosque', category: 'Segurança Nurban', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
+  { id: 'nurban_palmeiras', name: 'Palmeiras', category: 'Segurança Nurban', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
+  { id: 'nurban_cesario', name: 'Cesario', category: 'Segurança Nurban', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
+  { id: 'nurban_joao', name: 'Joao Ramalho', category: 'Segurança Nurban', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
+  { id: 'nurban_venancio', name: 'Venancio', category: 'Segurança Nurban', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
   // Segurança Kallas
-  { id: 'kallas_central', name: 'Central Kallas', category: 'Segurança Kallas', type: 'diurno', days: [1,3,5], alertTime: '04:00' },
+  { id: 'kallas_central', name: 'Central Kallas', category: 'Segurança Kallas', days: [1,3,5], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
   // Segurança Cursino
-  { id: 'cursino_terreno', name: 'Terreno Cursino', category: 'Segurança Cursino', type: 'diurno', days: [1,2,3,4,5,6], alertTime: '04:00' },
+  { id: 'cursino_terreno', name: 'Terreno Cursino', category: 'Segurança Cursino', days: [1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
   // Limpeza
-  { id: 'limp_clinica', name: 'Clinica', category: 'Limpeza', type: 'limpeza', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
-  { id: 'limp_campo_belo', name: 'Campo Belo', category: 'Limpeza', type: 'limpeza', days: [3], alertTime: '04:00' },
-  { id: 'limp_palmeiras', name: 'Palmeiras', category: 'Limpeza', type: 'limpeza', days: [1,2,4,5,6], alertTime: '04:00' },
-  { id: 'limp_cesario', name: 'Cesario (Limpeza)', category: 'Limpeza', type: 'limpeza', days: [1,2,4,5,6], alertTime: '06:30' },
-  { id: 'limp_bosque', name: 'Bosque', category: 'Limpeza', type: 'limpeza', days: [0,1,2,3,4,5,6], alertTime: '04:00' },
+  { id: 'limp_clinica', name: 'Clinica', category: 'Limpeza', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
+  { id: 'limp_campo_belo', name: 'Campo Belo', category: 'Limpeza', days: [3], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
+  { id: 'limp_palmeiras', name: 'Palmeiras', category: 'Limpeza', days: [1,2,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
+  { id: 'limp_cesario', name: 'Cesario (Limpeza)', category: 'Limpeza', days: [1,2,4,5,6], alertTimeDiurno: '06:30', alertTimeNoturno: '' },
+  { id: 'limp_bosque', name: 'Bosque', category: 'Limpeza', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
 ];
 
 class SoundManager {
@@ -185,8 +185,8 @@ class FirebaseManager {
         DEFAULT_POSTS.forEach(defPost => {
           if (existingData[defPost.id]) {
             updates[`${defPost.id}/days`] = defPost.days;
-            updates[`${defPost.id}/type`] = defPost.type;
-            updates[`${defPost.id}/alertTime`] = defPost.alertTime;
+            updates[`${defPost.id}/alertTimeDiurno`] = defPost.alertTimeDiurno;
+            updates[`${defPost.id}/alertTimeNoturno`] = defPost.alertTimeNoturno;
             updates[`${defPost.id}/name`] = defPost.name;
             updates[`${defPost.id}/category`] = defPost.category;
           }
@@ -324,6 +324,7 @@ class QTIApp {
 
   // Initialize the app
   async init() {
+    this.buildHibridoGrid();
     this.startClock();
     this.setupEventListeners();
 
@@ -415,23 +416,50 @@ class QTIApp {
 
   // Get current shift name ('diurno' or 'noturno')
   getCurrentShift() {
-    const hour = new Date().getHours();
-    return (hour >= 4 && hour < 16) ? 'diurno' : 'noturno';
+    const currentMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+    return (currentMinutes < 1020) ? 'diurno' : 'noturno';
+  }
+
+  migratePostIfNeeded(post) {
+    if (post.alertTimeDiurno !== undefined && post.alertTimeNoturno !== undefined) {
+      return post;
+    }
+    // Backward compatibility for old posts
+    const newPost = { ...post };
+    if (newPost.type === 'noturno') {
+      newPost.alertTimeNoturno = newPost.alertTime || '17:00';
+      newPost.alertTimeDiurno = '';
+    } else {
+      newPost.alertTimeDiurno = newPost.alertTime || '04:00';
+      newPost.alertTimeNoturno = '';
+    }
+    return newPost;
   }
 
   // Check if post is operating RIGHT NOW
   isOperatingNow(post) {
     if (!this.isActiveToday(post)) return false;
-
+    
+    post = this.migratePostIfNeeded(post);
     const currentMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+    
+    const operatesTurno1 = !!post.alertTimeDiurno;
+    const operatesTurno2 = !!post.alertTimeNoturno;
 
-    if (post.type === 'noturno') {
-      // Night post operates from 16:00 PM (960 min) through overnight until 10:00 AM (600 min)
-      return currentMinutes >= 960 || currentMinutes < 600;
-    } else {
-      // Day/limpeza post operates from 04:00 AM (240 min) until 22:00 PM (1320 min)
-      return currentMinutes >= 240 && currentMinutes < 1320;
+    // Se deixar em branco o turno, QTH fica apagado
+    if (!operatesTurno1 && !operatesTurno2) return false;
+
+    // Turno 2 is 17:00 (1020 min) to 23:59 (1439 min)
+    if (operatesTurno2 && currentMinutes >= 1020) {
+      return true;
     }
+    
+    // Turno 1 is 00:00 (0 min) to 16:59 (1019 min)
+    if (operatesTurno1 && currentMinutes < 1020) {
+      return true;
+    }
+
+    return false;
   }
 
   // Check if post should flash right now
@@ -439,22 +467,33 @@ class QTIApp {
     if (!this.isOperatingNow(post)) return false;
     if (post.status && post.status !== 'none') return false;
 
+    post = this.migratePostIfNeeded(post);
     const now = new Date();
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    
+    // Determine which shift we are currently in
+    const isTurno2 = currentMinutes >= 1020;
+    const isTurno1 = currentMinutes < 1020;
 
-    const [alertH, alertM] = (post.alertTime || (post.type === 'noturno' ? '16:00' : '04:00')).split(':').map(Number);
+    let alertTimeStr = null;
+
+    if (post.alertTimeNoturno && isTurno2) {
+      alertTimeStr = post.alertTimeNoturno;
+    } else if (post.alertTimeDiurno && isTurno1) {
+      alertTimeStr = post.alertTimeDiurno;
+    }
+    
+    if (!alertTimeStr) return false;
+
+    const [alertH, alertM] = alertTimeStr.split(':').map(Number);
     const alertTimeMinutes = alertH * 60 + alertM;
 
-    if (post.type === 'noturno') {
-      // Night post starts flashing at 16:00 (960 min) until 10:00 AM next morning (600 min)
-      return currentMinutes >= alertTimeMinutes || currentMinutes < 600;
-    } else {
-      // Day/limpeza post starts flashing at 04:00 (240 min) or 06:30 (390 min) until 22:00 PM (1320 min)
-      return currentMinutes >= alertTimeMinutes && currentMinutes < 1320;
-    }
+    // Both Turno 1 and Turno 2 do not cross midnight within themselves
+    // They just flash from the alert time until the end of the shift.
+    return currentMinutes >= alertTimeMinutes;
   }
 
-  // Calculate current auto-reset key for 10:00 AM and 22:00 PM schedule
+  // Calculate current auto-reset key for 00:00 AM and 17:00 PM schedule
   getCurrentResetKey() {
     const now = new Date();
     const year = now.getFullYear();
@@ -464,24 +503,16 @@ class QTIApp {
 
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-    if (currentMinutes >= 600 && currentMinutes < 1320) {
-      // 10:00 AM (600 min) to 21:59 PM (1319 min) -> Cycle 10:00 AM
-      return `${dateStr}_10:00`;
-    } else if (currentMinutes >= 1320) {
-      // 22:00 PM (1320 min) to 23:59 PM -> Cycle 22:00 PM
-      return `${dateStr}_22:00`;
+    if (currentMinutes >= 1020) {
+      // 17:00 PM (1020 min) to 23:59 PM -> Cycle 17:00
+      return `${dateStr}_17:00`;
     } else {
-      // 00:00 AM to 09:59 AM -> Belongs to yesterday's 22:00 PM cycle
-      const yesterday = new Date(now);
-      yesterday.setDate(yesterday.getDate() - 1);
-      const yYear = yesterday.getFullYear();
-      const yMonth = String(yesterday.getMonth() + 1).padStart(2, '0');
-      const yDay = String(yesterday.getDate()).padStart(2, '0');
-      return `${yYear}-${yMonth}-${yDay}_22:00`;
+      // 00:00 AM (0 min) to 16:59 PM -> Cycle 00:00
+      return `${dateStr}_00:00`;
     }
   }
 
-  // Check and perform auto-reset at 10:00 AM and 22:00 PM
+  // Check and perform auto-reset at 00:00 AM and 17:00 PM
   async checkAutoReset() {
     if (!this.firebase.isConnected || !this.posts) return;
 
@@ -496,7 +527,7 @@ class QTIApp {
           await this.firebase.resetStatuses(postIds);
         }
         await this.firebase.setLastResetKey(targetKey);
-        this.showToast('🔄 Reset automático de turno (10:00 / 22:00) realizado!', 'info');
+        this.showToast('🔄 Reset automático de turno (00:00 / 17:00) realizado!', 'info');
       }
     } catch (err) {
       console.warn('checkAutoReset warning:', err);
@@ -616,12 +647,12 @@ class QTIApp {
 
   // Create a single post card element
   createPostCard(post) {
+    post = this.migratePostIfNeeded(post);
     const isOperating = this.isOperatingNow(post);
     const card = document.createElement('div');
     card.id = `card-${post.id}`;
     card.className = `post-card${post.status !== 'none' ? ` status-${post.status.replace('_', '-')}` : ''}${!isOperating ? ' inactive' : ''}`;
 
-    const typeLabels = { diurno: 'Diurno', noturno: 'Noturno', limpeza: 'Limpeza' };
     const statusLabels = {
       'none': 'Aguardando...',
       'sem_contato': '🔴 Sem Contato',
@@ -638,14 +669,25 @@ class QTIApp {
     let displayStatusText = statusLabels[post.status] || 'Aguardando...';
     let displayStatusClass = statusClasses[post.status] || 'none';
 
+    let typeLabel = '';
+    if (post.alertTimeDiurno && post.alertTimeNoturno) typeLabel = '24h';
+    else if (post.alertTimeDiurno) typeLabel = 'Diurno';
+    else if (post.alertTimeNoturno) typeLabel = 'Noturno';
+    else typeLabel = 'Inativo';
+
     if (!isOperating) {
       displayStatusClass = 'none';
       if (!this.isActiveToday(post)) {
         displayStatusText = '⛔ Folga Hoje';
-      } else if (post.type === 'noturno') {
-        displayStatusText = '🌙 Turno Noturno (16h)';
+      } else if (post.alertTimeNoturno && !post.alertTimeDiurno) {
+        displayStatusText = `🌙 Turno Noturno (${post.alertTimeNoturno})`;
+      } else if (post.alertTimeDiurno && !post.alertTimeNoturno) {
+        displayStatusText = `☀️ Turno Diurno (${post.alertTimeDiurno})`;
+      } else if (!post.alertTimeDiurno && !post.alertTimeNoturno) {
+        displayStatusText = '⛔ Turnos em branco (Inativo)';
       } else {
-        displayStatusText = '☀️ Turno Diurno (4h)';
+        // Operates both, but neither is active right now (impossible with current 24h logic, but fallback)
+        displayStatusText = 'Inativo no momento';
       }
     }
 
@@ -656,8 +698,12 @@ class QTIApp {
     } else {
       scheduleText = 'Todos os dias';
     }
-    if (post.alertTime) {
-      scheduleText += ` · Alerta: ${post.alertTime}`;
+    
+    let alertsText = [];
+    if (post.alertTimeDiurno) alertsText.push(`☀️ ${post.alertTimeDiurno}`);
+    if (post.alertTimeNoturno) alertsText.push(`🌙 ${post.alertTimeNoturno}`);
+    if (alertsText.length > 0) {
+      scheduleText += ` · Alerta: ${alertsText.join(' | ')}`;
     }
 
     let lastUpdateText = '';
@@ -669,10 +715,11 @@ class QTIApp {
     const disabledAttr = !isOperating ? 'disabled' : '';
 
     card.innerHTML = `
+      <button class="btn-edit-post" onclick="app.showEditPostModal('${post.id}')" title="Editar posto">✏️</button>
       <button class="btn-delete-post" onclick="app.confirmDelete('${post.id}', '${post.name}')" title="Deletar posto">✕</button>
       <div class="post-header">
         <span class="post-name">${post.name}</span>
-        <span class="post-type-badge ${post.type}">${typeLabels[post.type] || post.type}</span>
+        <span class="post-type-badge ${typeLabel.toLowerCase()}">${typeLabel}</span>
       </div>
       <div class="post-schedule">${scheduleText}</div>
       <div class="post-status-display ${displayStatusClass}">${displayStatusText}</div>
@@ -900,21 +947,120 @@ class QTIApp {
     window.open(`https://wa.me/?text=${encoded}`, '_blank');
   }
 
+  buildHibridoGrid() {
+    const grid = document.querySelector('.hibrido-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const dayNames = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    dayNames.forEach((name, idx) => {
+      grid.innerHTML += `
+        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 4px;">
+          <span style="font-size: 0.9rem;">${name}</span>
+          <select id="hibrido-day-${idx}" class="form-select" style="width: auto; padding: 4px; font-size: 0.85rem;">
+            <option value="folga">Folga</option>
+            <option value="diurno">Diurno</option>
+            <option value="noturno">Noturno</option>
+            <option value="24h">24h</option>
+          </select>
+        </div>
+      `;
+    });
+  }
+
+  updateEscalaUI(type) {
+    const groupDiurno = document.getElementById('group-alert-diurno');
+    const groupNoturno = document.getElementById('group-alert-noturno');
+    const groupDays = document.getElementById('group-standard-days');
+    const groupHibrido = document.getElementById('group-hibrido-days');
+
+    if (type === 'diurno') {
+      groupDiurno.style.display = 'block';
+      groupNoturno.style.display = 'none';
+      groupDays.style.display = 'block';
+      groupHibrido.style.display = 'none';
+    } else if (type === 'noturno') {
+      groupDiurno.style.display = 'none';
+      groupNoturno.style.display = 'block';
+      groupDays.style.display = 'block';
+      groupHibrido.style.display = 'none';
+    } else if (type === '24h') {
+      groupDiurno.style.display = 'block';
+      groupNoturno.style.display = 'block';
+      groupDays.style.display = 'block';
+      groupHibrido.style.display = 'none';
+    } else if (type === 'hibrido') {
+      groupDiurno.style.display = 'block';
+      groupNoturno.style.display = 'block';
+      groupDays.style.display = 'none';
+      groupHibrido.style.display = 'block';
+    }
+  }
+
   // Show add post modal
   showAddPostModal() {
+    document.getElementById('add-post-modal-title').textContent = '➕ Novo Posto';
+    document.getElementById('edit-post-id').value = '';
     document.getElementById('add-post-modal').classList.add('active');
     document.getElementById('new-post-name').value = '';
     document.getElementById('new-post-category').value = 'Segurança Econ';
-    document.getElementById('new-post-type').value = 'diurno';
-    document.getElementById('new-post-alert').value = '04:00';
+    document.getElementById('custom-category-group').style.display = 'none';
+    document.getElementById('new-post-alert-diurno').value = '04:00';
+    document.getElementById('new-post-alert-noturno').value = '17:00';
+    document.getElementById('new-post-escala-type').value = 'diurno';
+    this.updateEscalaUI('diurno');
     document.querySelectorAll('.day-cb').forEach(cb => cb.checked = true);
+    for (let i = 0; i < 7; i++) {
+      const el = document.getElementById(`hibrido-day-${i}`);
+      if (el) el.value = 'folga';
+    }
+  }
+
+  showEditPostModal(postId) {
+    if (!this.posts[postId]) return;
+    const post = this.migratePostIfNeeded(this.posts[postId]);
+    
+    document.getElementById('add-post-modal-title').textContent = '✏️ Editar Posto';
+    document.getElementById('edit-post-id').value = postId;
+    
+    document.getElementById('new-post-name').value = post.name;
+    
+    const categorySelect = document.getElementById('new-post-category');
+    const options = Array.from(categorySelect.options).map(o => o.value);
+    if (options.includes(post.category)) {
+      categorySelect.value = post.category;
+      document.getElementById('custom-category-group').style.display = 'none';
+    } else {
+      categorySelect.value = 'custom';
+      document.getElementById('custom-category-group').style.display = 'block';
+      document.getElementById('new-post-custom-category').value = post.category;
+    }
+    
+    document.getElementById('new-post-alert-diurno').value = post.alertTimeDiurno || '';
+    document.getElementById('new-post-alert-noturno').value = post.alertTimeNoturno || '';
+    
+    const escala = post.escalaType || 'diurno';
+    document.getElementById('new-post-escala-type').value = escala;
+    this.updateEscalaUI(escala);
+    
+    document.querySelectorAll('.day-cb').forEach(cb => {
+      cb.checked = post.days && post.days.includes(parseInt(cb.value));
+    });
+
+    if (post.hibridoSchedule) {
+      for (let i = 0; i < 7; i++) {
+        const el = document.getElementById(`hibrido-day-${i}`);
+        if (el) el.value = post.hibridoSchedule[i] || 'folga';
+      }
+    }
+    
+    document.getElementById('add-post-modal').classList.add('active');
   }
 
   hideAddPostModal() {
     document.getElementById('add-post-modal').classList.remove('active');
   }
 
-  // Add new post from form
+  // Add or Edit post from form
   async addNewPost() {
     const name = document.getElementById('new-post-name').value.trim();
     if (!name) {
@@ -931,22 +1077,43 @@ class QTIApp {
       return;
     }
 
-    const type = document.getElementById('new-post-type').value;
-    const alertTime = document.getElementById('new-post-alert').value;
+    const escalaType = document.getElementById('new-post-escala-type').value;
+    const alertTimeDiurno = document.getElementById('new-post-alert-diurno').value;
+    const alertTimeNoturno = document.getElementById('new-post-alert-noturno').value;
 
     const days = [];
     document.querySelectorAll('.day-cb:checked').forEach(cb => {
       days.push(parseInt(cb.value));
     });
 
-    if (days.length === 0) {
+    if (escalaType !== 'hibrido' && days.length === 0) {
       this.showToast('Selecione pelo menos um dia', 'error');
       return;
     }
 
-    const id = name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_') + '_' + Date.now();
+    const hibridoSchedule = {};
+    for (let i = 0; i < 7; i++) {
+      const el = document.getElementById(`hibrido-day-${i}`);
+      hibridoSchedule[i] = el ? el.value : 'folga';
+    }
 
-    const post = { id, name, category: finalCategory, type, days, alertTime, status: 'none', lastUpdate: null };
+    const editId = document.getElementById('edit-post-id').value;
+    const isEdit = !!editId;
+    const id = isEdit ? editId : name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_') + '_' + Date.now();
+
+    // Preserve existing status and update timestamps if editing
+    const existingPost = isEdit ? this.posts[id] : null;
+    const status = existingPost ? existingPost.status : 'none';
+    const lastUpdate = existingPost ? existingPost.lastUpdate : null;
+    const lastShiftReset = existingPost ? existingPost.lastShiftReset : null;
+
+    const post = { 
+      id, name, category: finalCategory, type: '', 
+      escalaType, hibridoSchedule, days, 
+      alertTimeDiurno, alertTimeNoturno, 
+      status, lastUpdate, lastShiftReset 
+    };
+    
     this.posts[id] = post;
     localStorage.setItem('qti_posts', JSON.stringify(this.posts));
     this.renderPosts();
@@ -954,6 +1121,7 @@ class QTIApp {
     let firebaseError = null;
     try {
       if (this.firebase.isConnected) {
+        // addPost works as update since it uses .set() on the specific ID
         await this.firebase.addPost(post);
       }
     } catch (e) {
@@ -966,7 +1134,7 @@ class QTIApp {
     if (firebaseError) {
       this.showToast(`Salvo localmente, mas falhou ao sincronizar. Regras expiradas?`, 'error');
     } else {
-      this.showToast(`Posto "${name}" adicionado com sucesso`, 'success');
+      this.showToast(isEdit ? `Posto "${name}" atualizado com sucesso` : `Posto "${name}" adicionado com sucesso`, 'success');
     }
   }
 
@@ -1054,13 +1222,8 @@ class QTIApp {
       customGroup.style.display = e.target.value === 'custom' ? 'block' : 'none';
     });
 
-    document.getElementById('new-post-type').addEventListener('change', (e) => {
-      const alertInput = document.getElementById('new-post-alert');
-      if (e.target.value === 'noturno') {
-        alertInput.value = '16:00';
-      } else {
-        alertInput.value = '04:00';
-      }
+    document.getElementById('new-post-escala-type').addEventListener('change', (e) => {
+      this.updateEscalaUI(e.target.value);
     });
 
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
@@ -1071,6 +1234,7 @@ class QTIApp {
       });
     });
   }
+
 }
 
 // Initialize app when DOM is ready
