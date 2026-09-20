@@ -158,35 +158,40 @@ class FirebaseManager {
     }
   }
 
-  // Initialize and sync posts in Firebase from DEFAULT_POSTS
+  // Initialize and sync posts in Firebase from DEFAULT_POSTS ONLY if empty
   async initializePosts() {
     try {
       const snapshot = await this.postsRef.once('value');
       const existingData = snapshot.val() || {};
-
+      
       const updates = {};
       // Remove obsolete posts if present in DB
       if (existingData.limp_palmeiras1) updates['limp_palmeiras1'] = null;
       if (existingData.limp_palmeiras2) updates['limp_palmeiras2'] = null;
 
-      // Ensure default posts exist & sync schedule/type definitions
-      DEFAULT_POSTS.forEach(defPost => {
-        if (!existingData[defPost.id]) {
+      // Only seed default posts if the database is completely empty
+      // This prevents deleted posts from coming back when the app refreshes.
+      if (Object.keys(existingData).length === 0) {
+        DEFAULT_POSTS.forEach(defPost => {
           updates[defPost.id] = {
             ...defPost,
             status: 'none',
             lastUpdate: null,
             lastShiftReset: null
           };
-        } else {
-          // Sync definition properties without overwriting status or lastUpdate
-          updates[`${defPost.id}/days`] = defPost.days;
-          updates[`${defPost.id}/type`] = defPost.type;
-          updates[`${defPost.id}/alertTime`] = defPost.alertTime;
-          updates[`${defPost.id}/name`] = defPost.name;
-          updates[`${defPost.id}/category`] = defPost.category;
-        }
-      });
+        });
+      } else {
+        // Sync definition properties for existing default posts without overwriting status
+        DEFAULT_POSTS.forEach(defPost => {
+          if (existingData[defPost.id]) {
+            updates[`${defPost.id}/days`] = defPost.days;
+            updates[`${defPost.id}/type`] = defPost.type;
+            updates[`${defPost.id}/alertTime`] = defPost.alertTime;
+            updates[`${defPost.id}/name`] = defPost.name;
+            updates[`${defPost.id}/category`] = defPost.category;
+          }
+        });
+      }
 
       if (Object.keys(updates).length > 0) {
         await this.postsRef.update(updates);
@@ -300,7 +305,9 @@ class QTIApp {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed && Object.keys(parsed).length > 0) return parsed;
+        // If parsed is an object (even empty), return it. 
+        // This prevents default posts from coming back if the user deleted all of them.
+        if (parsed && typeof parsed === 'object') return parsed;
       } catch (e) {}
     }
     const initial = {};
@@ -340,7 +347,7 @@ class QTIApp {
 
       this.firebase.onPostsChange(
         (data) => {
-          if (data && Object.keys(data).length > 0) {
+          if (data) {
             this.onDataUpdate(data);
           }
         },
@@ -731,13 +738,24 @@ class QTIApp {
       delete this.posts[postId];
       localStorage.setItem('qti_posts', JSON.stringify(this.posts));
       this.renderPosts();
+      
+      let firebaseError = null;
       try {
-        await this.firebase.deletePost(postId);
+        if (this.firebase.isConnected) {
+          await this.firebase.deletePost(postId);
+        }
       } catch (e) {
         console.warn('Delete failed in Firebase:', e);
+        firebaseError = e;
       }
+      
       overlay.classList.remove('active');
-      this.showToast(`Posto "${postName}" deletado`, 'success');
+      
+      if (firebaseError) {
+        this.showToast(`Posto deletado localmente. Falha ao sincronizar (Regras?).`, 'error');
+      } else {
+        this.showToast(`Posto "${postName}" deletado`, 'success');
+      }
     };
 
     document.getElementById('confirm-no').onclick = () => {
@@ -933,14 +951,23 @@ class QTIApp {
     localStorage.setItem('qti_posts', JSON.stringify(this.posts));
     this.renderPosts();
 
+    let firebaseError = null;
     try {
-      await this.firebase.addPost(post);
+      if (this.firebase.isConnected) {
+        await this.firebase.addPost(post);
+      }
     } catch (e) {
       console.warn('Firebase addPost failed:', e);
+      firebaseError = e;
     }
 
     this.hideAddPostModal();
-    this.showToast(`Posto "${name}" adicionado com sucesso`, 'success');
+    
+    if (firebaseError) {
+      this.showToast(`Salvo localmente, mas falhou ao sincronizar. Regras expiradas?`, 'error');
+    } else {
+      this.showToast(`Posto "${name}" adicionado com sucesso`, 'success');
+    }
   }
 
   // Show/hide setup modal
