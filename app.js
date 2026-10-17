@@ -1,28 +1,33 @@
 const DEFAULT_POSTS = [
   // Segurança Econ
-  { id: 'econ_giovanni', name: 'Giovanni Gronchi', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
-  { id: 'econ_mascote', name: 'Mascote', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
-  { id: 'econ_tumiaru', name: 'Tumiaru', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
-  { id: 'econ_sabara', name: 'Sabará', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
-  { id: 'econ_diadema', name: 'Diadema', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
-  { id: 'econ_oswaldo', name: 'Oswaldo', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
-  { id: 'econ_suzana', name: 'Suzana', category: 'Segurança Econ', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
+  { id: 'arthur_lobo_1789936038873', name: 'Arthur Lobo', category: 'Segurança Econ', escalaType: 'hibrido', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '17:00', hibridoSchedule: ['24h','noturno','noturno','noturno','noturno','noturno','24h'] },
+  { id: 'giovanni_gronch_1789936066037', name: 'Giovanni Gronchi', category: 'Segurança Econ', escalaType: '24h', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'ipiranga_1789935880313', name: 'Ipiranga', category: 'Segurança Econ', escalaType: 'hibrido', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '17:00', hibridoSchedule: ['24h','noturno','noturno','noturno','noturno','noturno','24h'] },
+  { id: 'mascote_1789935938743', name: 'Mascote', category: 'Segurança Econ', escalaType: 'noturno', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'oswaldo_1789935997436', name: 'Oswaldo', category: 'Segurança Econ', escalaType: 'noturno', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'sabar__1789935953916', name: 'Sabara', category: 'Segurança Econ', escalaType: 'noturno', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'suzana_1789935987050', name: 'Suzana', category: 'Segurança Econ', escalaType: 'noturno', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'tumiaru_1789935977310', name: 'Tumiaru', category: 'Segurança Econ', escalaType: 'noturno', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+
   // Segurança Nurban
-  { id: 'nurban_bosque', name: 'Bosque', category: 'Segurança Nurban', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
-  { id: 'nurban_palmeiras', name: 'Palmeiras', category: 'Segurança Nurban', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
-  { id: 'nurban_cesario', name: 'Cesario', category: 'Segurança Nurban', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
-  { id: 'nurban_joao', name: 'Joao Ramalho', category: 'Segurança Nurban', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
-  { id: 'nurban_venancio', name: 'Venancio', category: 'Segurança Nurban', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '16:00' },
+  { id: 'bosque_1789936154381', name: 'Bosque', category: 'Segurança Nurban', escalaType: '24h', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'ces_rio_1789936139904', name: 'Cesario', category: 'Segurança Nurban', escalaType: '24h', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'jo_o_ramalho_1789936084220', name: 'Joao Ramalho', category: 'Segurança Nurban', escalaType: 'noturno', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'palmeiras_1789936128170', name: 'Palmeiras', category: 'Segurança Nurban', escalaType: '24h', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'perdizes_1789936116950', name: 'Perdizes', category: 'Segurança Nurban', escalaType: 'noturno', days: [0,1,2,3,4,5,6], alertTimeDiurno: '', alertTimeNoturno: '17:00', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+
   // Segurança Kallas
-  { id: 'kallas_central', name: 'Central Kallas', category: 'Segurança Kallas', days: [1,3,5], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
+  { id: 'central_kallas_1789936253543', name: 'Central Kallas', category: 'Segurança Kallas', escalaType: 'hibrido', days: [1,3,5], alertTimeDiurno: '06:00', alertTimeNoturno: '', hibridoSchedule: ['folga','diurno','folga','diurno','folga','diurno','folga'] },
+
   // Segurança Cursino
-  { id: 'cursino_terreno', name: 'Terreno Cursino', category: 'Segurança Cursino', days: [1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
+  { id: 'cursino_1789936223784', name: 'Cursino', category: 'Segurança Cursino', escalaType: 'hibrido', days: [1,2,3,4,5,6], alertTimeDiurno: '06:00', alertTimeNoturno: '', hibridoSchedule: ['folga','diurno','diurno','diurno','diurno','diurno','diurno'] },
+
   // Limpeza
-  { id: 'limp_clinica', name: 'Clinica', category: 'Limpeza', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
-  { id: 'limp_campo_belo', name: 'Campo Belo', category: 'Limpeza', days: [3], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
-  { id: 'limp_palmeiras', name: 'Palmeiras', category: 'Limpeza', days: [1,2,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
-  { id: 'limp_cesario', name: 'Cesario (Limpeza)', category: 'Limpeza', days: [1,2,4,5,6], alertTimeDiurno: '06:30', alertTimeNoturno: '' },
-  { id: 'limp_bosque', name: 'Bosque', category: 'Limpeza', days: [0,1,2,3,4,5,6], alertTimeDiurno: '04:00', alertTimeNoturno: '' },
+  { id: 'cl_nica_1789985216105', name: 'Clinica', category: 'Limpeza', escalaType: 'diurno', days: [0,1,2,3,4,5,6], alertTimeDiurno: '05:00', alertTimeNoturno: '', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'bosque_1789937345756', name: 'Bosque', category: 'Limpeza', escalaType: 'diurno', days: [0,1,2,3,4,5,6], alertTimeDiurno: '06:00', alertTimeNoturno: '', hibridoSchedule: ['folga','folga','folga','folga','folga','folga','folga'] },
+  { id: 'campo_belo_1789936312558', name: 'Campo Belo', category: 'Limpeza', escalaType: 'hibrido', days: [3], alertTimeDiurno: '06:00', alertTimeNoturno: '', hibridoSchedule: ['folga','folga','folga','diurno','folga','folga','folga'] },
+  { id: 'ces_rio_1789936415820', name: 'Cesario', category: 'Limpeza', escalaType: 'hibrido', days: [1,2,4,5,6], alertTimeDiurno: '06:30', alertTimeNoturno: '', hibridoSchedule: ['folga','diurno','diurno','folga','diurno','diurno','diurno'] },
+  { id: 'ibirapuera_1789936286981', name: 'Ibirapuera', category: 'Limpeza', escalaType: 'hibrido', days: [3], alertTimeDiurno: '07:00', alertTimeNoturno: '', hibridoSchedule: ['folga','folga','folga','diurno','folga','folga','folga'] },
 ];
 
 class SoundManager {
@@ -121,6 +126,13 @@ class FirebaseManager {
     this.postsRef = null;
     this.systemRef = null;
     this.isConnected = false;
+    this.serverTimeOffset = 0;
+    this.postsListener = null;
+  }
+
+  // Current time corrected by the Firebase server clock (protects against wrong device clocks)
+  now() {
+    return new Date(Date.now() + this.serverTimeOffset);
   }
 
   getConfig() {
@@ -149,6 +161,23 @@ class FirebaseManager {
         const textEl = document.getElementById('connection-text');
         if (statusEl) statusEl.className = this.isConnected ? 'conn-dot connected' : 'conn-dot disconnected';
         if (textEl) textEl.textContent = this.isConnected ? 'Online' : 'Offline';
+      });
+
+      this.db.ref('.info/serverTimeOffset').on('value', (snap) => {
+        this.serverTimeOffset = snap.val() || 0;
+      });
+
+      // Mobile browsers silently kill the websocket while the tab/screen is in background.
+      // Force a fresh connection when the user comes back so the screen is never stale.
+      let hiddenAt = null;
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          hiddenAt = Date.now();
+        } else if (hiddenAt && Date.now() - hiddenAt > 30000) {
+          this.db.goOffline();
+          this.db.goOnline();
+          hiddenAt = null;
+        }
       });
 
       return true;
@@ -189,6 +218,10 @@ class FirebaseManager {
             updates[`${defPost.id}/alertTimeNoturno`] = defPost.alertTimeNoturno;
             updates[`${defPost.id}/name`] = defPost.name;
             updates[`${defPost.id}/category`] = defPost.category;
+            updates[`${defPost.id}/escalaType`] = defPost.escalaType;
+            if (defPost.hibridoSchedule) {
+              updates[`${defPost.id}/hibridoSchedule`] = defPost.hibridoSchedule;
+            }
           }
         });
       }
@@ -207,15 +240,31 @@ class FirebaseManager {
   }
 
   // Listen for real-time changes on posts with error callback
+  // A cancelled listener (e.g. a permission error) is never restored by Firebase,
+  // so we re-subscribe after a delay instead of going silently stale.
   onPostsChange(callback, errorCallback) {
     if (!this.postsRef) return;
-    this.postsRef.on('value', (snapshot) => {
+    if (this.postsListener) this.postsRef.off('value', this.postsListener);
+    this.postsListener = this.postsRef.on('value', (snapshot) => {
       const data = snapshot.val() || {};
       callback(data);
     }, (error) => {
       console.error('Firebase onPostsChange error:', error);
+      this.postsListener = null;
       if (errorCallback) errorCallback(error);
+      setTimeout(() => this.onPostsChange(callback, errorCallback), 10000);
     });
+  }
+
+  // Atomically claim a shift reset: only one client wins, and a device with a
+  // clock behind can never move the key backwards (keys sort chronologically).
+  async claimReset(targetKey) {
+    if (!this.systemRef) return false;
+    const result = await this.systemRef.child('lastResetKey').transaction((current) => {
+      if (current && current >= targetKey) return; // abort: already reset for this shift
+      return targetKey;
+    });
+    return result.committed;
   }
 
   // Get and set auto-reset key in Firebase
@@ -244,7 +293,7 @@ class FirebaseManager {
     if (!this.postsRef) return;
     await this.postsRef.child(postId).update({
       status: status,
-      lastUpdate: new Date().toISOString()
+      lastUpdate: this.now().toISOString()
     });
   }
 
@@ -265,14 +314,19 @@ class FirebaseManager {
     await this.postsRef.child(postId).remove();
   }
 
-  // Reset statuses for all posts
-  async resetStatuses(postIds) {
+  // Reset statuses for all posts that exist on the server
+  // (using local ids could resurrect posts another user deleted)
+  async resetStatuses() {
     if (!this.postsRef) return;
+    const snapshot = await this.postsRef.once('value');
+    const postIds = Object.keys(snapshot.val() || {});
+    if (postIds.length === 0) return;
+    const resetAt = this.now().toISOString();
     const updates = {};
     postIds.forEach(id => {
       updates[`${id}/status`] = 'none';
       updates[`${id}/lastUpdate`] = null;
-      updates[`${id}/lastShiftReset`] = new Date().toISOString();
+      updates[`${id}/lastShiftReset`] = resetAt;
     });
     await this.postsRef.update(updates);
   }
@@ -339,13 +393,7 @@ class QTIApp {
     if (success) {
       this.firebase.saveConfig(config);
 
-      // Try syncing with Firebase
-      try {
-        await this.firebase.initializePosts();
-      } catch (err) {
-        console.warn('initializePosts warning:', err);
-      }
-
+      // Subscribe BEFORE initializePosts so a slow/failed init never delays live updates
       this.firebase.onPostsChange(
         (data) => {
           if (data) {
@@ -359,6 +407,12 @@ class QTIApp {
           }
         }
       );
+
+      try {
+        await this.firebase.initializePosts();
+      } catch (err) {
+        console.warn('initializePosts warning:', err);
+      }
 
       this.startAlertChecker();
       this.startAutoResetChecker();
@@ -408,32 +462,83 @@ class QTIApp {
     this.clockInterval = setInterval(updateClock, 1000);
   }
 
-  // Check if a post is scheduled for today (day of week)
-  isActiveToday(post) {
-    const today = new Date().getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
-    return post.days && post.days.includes(today);
-  }
-
   // Get current shift name ('diurno' or 'noturno')
   getCurrentShift() {
     const currentMinutes = new Date().getHours() * 60 + new Date().getMinutes();
     return (currentMinutes < 1020) ? 'diurno' : 'noturno';
   }
 
+  normalizeCategory(cat) {
+    if (!cat) return 'Segurança Econ';
+    const c = cat.trim();
+    if (c.includes('Econ')) return 'Segurança Econ';
+    if (c.includes('Nurban')) return 'Segurança Nurban';
+    if (c.includes('Kallas')) return 'Segurança Kallas';
+    if (c.includes('Cursino')) return 'Segurança Cursino';
+    if (c.toLowerCase().includes('limpeza')) return 'Limpeza';
+    if (/^Seguran/i.test(c) || /^Segur/i.test(c)) return 'Segurança';
+    return c;
+  }
+
+  normalizeName(name) {
+    if (!name) return '';
+    return name
+      .replace(/Cesário/g, 'Cesario')
+      .replace(/Clínica/g, 'Clinica')
+      .replace(/Sabará/g, 'Sabara')
+      .replace(/João/g, 'Joao');
+  }
+
   migratePostIfNeeded(post) {
-    if (post.alertTimeDiurno !== undefined && post.alertTimeNoturno !== undefined) {
-      return post;
+    if (!post) return post;
+    const newPost = { ...post };
+    if (newPost.name) newPost.name = this.normalizeName(newPost.name);
+    if (newPost.category) newPost.category = this.normalizeCategory(newPost.category);
+
+    if (newPost.escalaType !== undefined && newPost.escalaType !== '') {
+      return newPost;
     }
     // Backward compatibility for old posts
-    const newPost = { ...post };
+    let hasD = !!newPost.alertTimeDiurno;
+    let hasN = !!newPost.alertTimeNoturno;
+
     if (newPost.type === 'noturno') {
-      newPost.alertTimeNoturno = newPost.alertTime || '17:00';
+      newPost.escalaType = 'noturno';
       newPost.alertTimeDiurno = '';
-    } else {
-      newPost.alertTimeDiurno = newPost.alertTime || '04:00';
+      if (!newPost.alertTimeNoturno) newPost.alertTimeNoturno = '17:00';
+    } else if (newPost.type === 'diurno' || newPost.type === 'limpeza') {
+      newPost.escalaType = 'diurno';
       newPost.alertTimeNoturno = '';
+      if (!newPost.alertTimeDiurno) newPost.alertTimeDiurno = '04:00';
+    } else if (hasD && hasN) {
+      newPost.escalaType = '24h';
+    } else if (hasD) {
+      newPost.escalaType = 'diurno';
+    } else if (hasN) {
+      newPost.escalaType = 'noturno';
+    } else {
+      newPost.escalaType = 'diurno';
+    }
+
+    if (!newPost.hibridoSchedule) {
+      newPost.hibridoSchedule = ['folga', 'folga', 'folga', 'folga', 'folga', 'folga', 'folga'];
     }
     return newPost;
+  }
+
+  isActiveToday(post) {
+    post = this.migratePostIfNeeded(post);
+    if (post.escalaType === '24h') {
+      return true;
+    }
+    const today = new Date().getDay();
+    if (post.escalaType === 'hibrido') {
+      if (Array.isArray(post.hibridoSchedule)) {
+        return post.hibridoSchedule[today] !== undefined && post.hibridoSchedule[today] !== 'folga';
+      }
+      return post.hibridoSchedule && post.hibridoSchedule[today] !== 'folga';
+    }
+    return Array.isArray(post.days) && post.days.includes(today);
   }
 
   // Check if post is operating RIGHT NOW
@@ -442,24 +547,31 @@ class QTIApp {
     
     post = this.migratePostIfNeeded(post);
     const currentMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+    const today = new Date().getDay();
     
-    const operatesTurno1 = !!post.alertTimeDiurno;
-    const operatesTurno2 = !!post.alertTimeNoturno;
+    let operatesTurno1 = false; // Diurno: 00:00 às 16:59
+    let operatesTurno2 = false; // Noturno: 17:00 às 23:59
 
-    // Se deixar em branco o turno, QTH fica apagado
+    if (post.escalaType === 'hibrido') {
+      const todayType = Array.isArray(post.hibridoSchedule) ? post.hibridoSchedule[today] : (post.hibridoSchedule ? post.hibridoSchedule[today] : 'folga');
+      if (todayType === 'diurno') operatesTurno1 = true;
+      if (todayType === 'noturno') operatesTurno2 = true;
+      if (todayType === '24h') { operatesTurno1 = true; operatesTurno2 = true; }
+    } else {
+      if (post.escalaType === 'diurno') operatesTurno1 = true;
+      else if (post.escalaType === 'noturno') operatesTurno2 = true;
+      else if (post.escalaType === '24h') { operatesTurno1 = true; operatesTurno2 = true; }
+    }
+
     if (!operatesTurno1 && !operatesTurno2) return false;
 
-    // Turno 2 is 17:00 (1020 min) to 23:59 (1439 min)
-    if (operatesTurno2 && currentMinutes >= 1020) {
-      return true;
+    // Turno 2 (Noturno) is 17:00 (1020 min) to 23:59 (1439 min)
+    if (currentMinutes >= 1020) {
+      return operatesTurno2;
     }
     
-    // Turno 1 is 00:00 (0 min) to 16:59 (1019 min)
-    if (operatesTurno1 && currentMinutes < 1020) {
-      return true;
-    }
-
-    return false;
+    // Turno 1 (Diurno) is 00:00 (0 min) to 16:59 (1019 min)
+    return operatesTurno1;
   }
 
   // Check if post should flash right now
@@ -477,31 +589,42 @@ class QTIApp {
 
     let alertTimeStr = null;
 
-    if (post.alertTimeNoturno && isTurno2) {
+    if (isTurno2 && post.alertTimeNoturno) {
       alertTimeStr = post.alertTimeNoturno;
-    } else if (post.alertTimeDiurno && isTurno1) {
+    } else if (isTurno1 && post.alertTimeDiurno) {
       alertTimeStr = post.alertTimeDiurno;
     }
     
     if (!alertTimeStr) return false;
 
     const [alertH, alertM] = alertTimeStr.split(':').map(Number);
-    const alertTimeMinutes = alertH * 60 + alertM;
+    if (isNaN(alertH) || isNaN(alertM)) return false;
 
-    // Both Turno 1 and Turno 2 do not cross midnight within themselves
-    // They just flash from the alert time until the end of the shift.
-    return currentMinutes >= alertTimeMinutes;
+    const alertTimeMinutes = alertH * 60 + alertM;
+    const alertEndMinutes = alertTimeMinutes + 300; // 5 hours limit
+
+    // Se o fim do alerta passar de 00:00
+    if (alertEndMinutes >= 1440) {
+      const wrappedEnd = alertEndMinutes - 1440;
+      return currentMinutes >= alertTimeMinutes || currentMinutes < wrappedEnd;
+    } else {
+      return currentMinutes >= alertTimeMinutes && currentMinutes < alertEndMinutes;
+    }
   }
 
   // Calculate current auto-reset key for 00:00 AM and 17:00 PM schedule
+  // Uses server-corrected time in São Paulo timezone, so every device computes the same key
+  // even if its clock or timezone is wrong.
   getCurrentResetKey() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const dateStr = `${year}-${month}-${day}`;
+    const parts = {};
+    new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Sao_Paulo',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    }).formatToParts(this.firebase.now()).forEach(p => { parts[p.type] = p.value; });
+    const dateStr = `${parts.year}-${parts.month}-${parts.day}`;
 
-    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const currentMinutes = Number(parts.hour) * 60 + Number(parts.minute);
 
     if (currentMinutes >= 1020) {
       // 17:00 PM (1020 min) to 23:59 PM -> Cycle 17:00
@@ -519,14 +642,12 @@ class QTIApp {
     try {
       const targetKey = this.getCurrentResetKey();
       const lastKey = await this.firebase.getLastResetKey();
+      if (lastKey && lastKey >= targetKey) return;
 
-      if (lastKey !== targetKey) {
+      // Only the client that wins the transaction performs the reset
+      if (await this.firebase.claimReset(targetKey)) {
         console.log(`Auto reset triggered! Previous: ${lastKey}, New target: ${targetKey}`);
-        const postIds = Object.keys(this.posts);
-        if (postIds.length > 0) {
-          await this.firebase.resetStatuses(postIds);
-        }
-        await this.firebase.setLastResetKey(targetKey);
+        await this.firebase.resetStatuses();
         this.showToast('🔄 Reset automático de turno (00:00 / 17:00) realizado!', 'info');
       }
     } catch (err) {
@@ -599,8 +720,10 @@ class QTIApp {
 
     const categories = {};
     Object.values(this.posts).forEach(post => {
-      if (!categories[post.category]) categories[post.category] = [];
-      categories[post.category].push(post);
+      post = this.migratePostIfNeeded(post);
+      const cat = post.category || 'Segurança Econ';
+      if (!categories[cat]) categories[cat] = [];
+      categories[cat].push(post);
     });
 
     const categoryIcons = {
@@ -670,38 +793,55 @@ class QTIApp {
     let displayStatusClass = statusClasses[post.status] || 'none';
 
     let typeLabel = '';
-    if (post.alertTimeDiurno && post.alertTimeNoturno) typeLabel = '24h';
-    else if (post.alertTimeDiurno) typeLabel = 'Diurno';
-    else if (post.alertTimeNoturno) typeLabel = 'Noturno';
+    if (post.escalaType === 'hibrido') typeLabel = 'Híbrido';
+    else if (post.escalaType === '24h') typeLabel = '24h';
+    else if (post.escalaType === 'diurno') typeLabel = 'Diurno';
+    else if (post.escalaType === 'noturno') typeLabel = 'Noturno';
     else typeLabel = 'Inativo';
 
     if (!isOperating) {
       displayStatusClass = 'none';
       if (!this.isActiveToday(post)) {
         displayStatusText = '⛔ Folga Hoje';
-      } else if (post.alertTimeNoturno && !post.alertTimeDiurno) {
-        displayStatusText = `🌙 Turno Noturno (${post.alertTimeNoturno})`;
-      } else if (post.alertTimeDiurno && !post.alertTimeNoturno) {
-        displayStatusText = `☀️ Turno Diurno (${post.alertTimeDiurno})`;
-      } else if (!post.alertTimeDiurno && !post.alertTimeNoturno) {
-        displayStatusText = '⛔ Turnos em branco (Inativo)';
       } else {
-        // Operates both, but neither is active right now (impossible with current 24h logic, but fallback)
-        displayStatusText = 'Inativo no momento';
+        let todayType = '';
+        if (post.escalaType === 'hibrido') {
+           todayType = post.hibridoSchedule ? post.hibridoSchedule[new Date().getDay()] : 'folga';
+        } else {
+           todayType = post.escalaType;
+        }
+
+        if (todayType === 'noturno') displayStatusText = `🌙 Turno 17h (${post.alertTimeNoturno})`;
+        else if (todayType === 'diurno') displayStatusText = `☀️ Turno 00h (${post.alertTimeDiurno})`;
+        else displayStatusText = 'Inativo no momento';
       }
     }
 
     const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
     let scheduleText = '';
-    if (post.days && post.days.length < 7) {
-      scheduleText = post.days.map(d => dayNames[d]).join(', ');
+    if (post.escalaType === 'hibrido') {
+      let activeDays = 0;
+      if (post.hibridoSchedule) {
+        for (let i = 0; i < 7; i++) {
+          if (post.hibridoSchedule[i] !== 'folga') activeDays++;
+        }
+      }
+      scheduleText = `Escala Híbrida (${activeDays} dias/sem)`;
     } else {
-      scheduleText = 'Todos os dias';
+      if (post.days && post.days.length < 7) {
+        scheduleText = post.days.map(d => dayNames[d]).join(', ');
+      } else {
+        scheduleText = 'Todos os dias';
+      }
     }
     
     let alertsText = [];
-    if (post.alertTimeDiurno) alertsText.push(`☀️ ${post.alertTimeDiurno}`);
-    if (post.alertTimeNoturno) alertsText.push(`🌙 ${post.alertTimeNoturno}`);
+    if (post.escalaType === 'diurno' || post.escalaType === '24h' || post.escalaType === 'hibrido') {
+       if (post.alertTimeDiurno) alertsText.push(`☀️ ${post.alertTimeDiurno}`);
+    }
+    if (post.escalaType === 'noturno' || post.escalaType === '24h' || post.escalaType === 'hibrido') {
+       if (post.alertTimeNoturno) alertsText.push(`🌙 ${post.alertTimeNoturno}`);
+    }
     if (alertsText.length > 0) {
       scheduleText += ` · Alerta: ${alertsText.join(' | ')}`;
     }
@@ -719,7 +859,7 @@ class QTIApp {
       <button class="btn-delete-post" onclick="app.confirmDelete('${post.id}', '${post.name}')" title="Deletar posto">✕</button>
       <div class="post-header">
         <span class="post-name">${post.name}</span>
-        <span class="post-type-badge ${typeLabel.toLowerCase()}">${typeLabel}</span>
+        <span class="post-type-badge ${typeLabel.toLowerCase()} badge-${typeLabel.toLowerCase()}">${typeLabel}</span>
       </div>
       <div class="post-schedule">${scheduleText}</div>
       <div class="post-status-display ${displayStatusClass}">${displayStatusText}</div>
@@ -757,21 +897,32 @@ class QTIApp {
       this.sound.playForStatus(newStatus);
     }
 
-    // 1. Instant local update
+    // 1. Instant local update (not cached in localStorage: only server-confirmed data is cached,
+    //    otherwise a failed write would keep showing up as if it had been saved)
     this.posts[postId].status = newStatus;
     this.posts[postId].lastUpdate = new Date().toISOString();
-    localStorage.setItem('qti_posts', JSON.stringify(this.posts));
     this.renderPosts();
     this.checkAlerts();
 
-    // 2. Background sync with Firebase
+    if (!this.firebase.isConnected) {
+      this.showToast('⚠️ Sem conexão! O status só será enviado à equipe quando a internet voltar. Não feche o app.', 'error');
+    }
+
+    // 2. Sync with Firebase. The promise only resolves when the server confirms,
+    //    so warn the user if that takes too long instead of failing silently.
+    const slowWarning = setTimeout(() => {
+      this.showToast(`⚠️ "${post.name}": status ainda não chegou ao servidor. Verifique a conexão.`, 'error');
+    }, 8000);
     try {
       await this.firebase.updateStatus(postId, newStatus);
     } catch (err) {
-      console.warn('Firebase status update failed, saved locally:', err);
+      console.warn('Firebase status update failed:', err);
+      this.showToast(`❌ Falha ao salvar status de "${post.name}". A equipe NÃO vê essa alteração.`, 'error');
       if (err && err.message && (err.message.includes('permission_denied') || err.message.includes('Permission denied'))) {
         this.showPermissionErrorBanner();
       }
+    } finally {
+      clearTimeout(slowWarning);
     }
   }
 
@@ -829,7 +980,7 @@ class QTIApp {
       this.checkAlerts();
 
       try {
-        await this.firebase.resetStatuses(postIds);
+        await this.firebase.resetStatuses();
       } catch (e) {
         console.warn('Reset failed in Firebase:', e);
       }
@@ -1005,7 +1156,7 @@ class QTIApp {
     document.getElementById('new-post-category').value = 'Segurança Econ';
     document.getElementById('custom-category-group').style.display = 'none';
     document.getElementById('new-post-alert-diurno').value = '04:00';
-    document.getElementById('new-post-alert-noturno').value = '17:00';
+    document.getElementById('new-post-alert-noturno').value = '';
     document.getElementById('new-post-escala-type').value = 'diurno';
     this.updateEscalaUI('diurno');
     document.querySelectorAll('.day-cb').forEach(cb => cb.checked = true);
@@ -1035,12 +1186,12 @@ class QTIApp {
       document.getElementById('new-post-custom-category').value = post.category;
     }
     
-    document.getElementById('new-post-alert-diurno').value = post.alertTimeDiurno || '';
-    document.getElementById('new-post-alert-noturno').value = post.alertTimeNoturno || '';
-    
     const escala = post.escalaType || 'diurno';
     document.getElementById('new-post-escala-type').value = escala;
     this.updateEscalaUI(escala);
+
+    document.getElementById('new-post-alert-diurno').value = (escala === 'diurno' || escala === '24h' || escala === 'hibrido') ? (post.alertTimeDiurno || '') : '';
+    document.getElementById('new-post-alert-noturno').value = (escala === 'noturno' || escala === '24h' || escala === 'hibrido') ? (post.alertTimeNoturno || '') : '';
     
     document.querySelectorAll('.day-cb').forEach(cb => {
       cb.checked = post.days && post.days.includes(parseInt(cb.value));
@@ -1078,23 +1229,47 @@ class QTIApp {
     }
 
     const escalaType = document.getElementById('new-post-escala-type').value;
-    const alertTimeDiurno = document.getElementById('new-post-alert-diurno').value;
-    const alertTimeNoturno = document.getElementById('new-post-alert-noturno').value;
+    let alertTimeDiurno = document.getElementById('new-post-alert-diurno').value;
+    let alertTimeNoturno = document.getElementById('new-post-alert-noturno').value;
 
-    const days = [];
+    // Sanitização estrita de horários conforme escalaType
+    if (escalaType === 'diurno') {
+      alertTimeNoturno = '';
+      if (!alertTimeDiurno) alertTimeDiurno = '04:00';
+    } else if (escalaType === 'noturno') {
+      alertTimeDiurno = '';
+      if (!alertTimeNoturno) alertTimeNoturno = '17:00';
+    } else if (escalaType === '24h') {
+      if (!alertTimeDiurno) alertTimeDiurno = '04:00';
+      if (!alertTimeNoturno) alertTimeNoturno = '17:00';
+    }
+
+    let days = [];
     document.querySelectorAll('.day-cb:checked').forEach(cb => {
       days.push(parseInt(cb.value));
     });
-
-    if (escalaType !== 'hibrido' && days.length === 0) {
-      this.showToast('Selecione pelo menos um dia', 'error');
-      return;
-    }
 
     const hibridoSchedule = {};
     for (let i = 0; i < 7; i++) {
       const el = document.getElementById(`hibrido-day-${i}`);
       hibridoSchedule[i] = el ? el.value : 'folga';
+    }
+
+    if (escalaType === 'hibrido') {
+      // Sincronizar array de dias estritamente com os dias ativos da escala híbrida
+      days = [];
+      for (let i = 0; i < 7; i++) {
+        if (hibridoSchedule[i] && hibridoSchedule[i] !== 'folga') {
+          days.push(i);
+        }
+      }
+      if (days.length === 0) {
+        this.showToast('Configure pelo menos um dia ativo na escala híbrida', 'error');
+        return;
+      }
+    } else if (days.length === 0) {
+      this.showToast('Selecione pelo menos um dia de funcionamento', 'error');
+      return;
     }
 
     const editId = document.getElementById('edit-post-id').value;
@@ -1224,6 +1399,12 @@ class QTIApp {
 
     document.getElementById('new-post-escala-type').addEventListener('change', (e) => {
       this.updateEscalaUI(e.target.value);
+      if (e.target.value === '24h') {
+        const d = document.getElementById('new-post-alert-diurno');
+        const n = document.getElementById('new-post-alert-noturno');
+        if (!d.value) d.value = '04:00';
+        if (!n.value) n.value = '17:00';
+      }
     });
 
     document.querySelectorAll('.modal-overlay').forEach(overlay => {

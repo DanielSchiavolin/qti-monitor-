@@ -226,6 +226,18 @@ body {
   color: #2ECC71;
 }
 
+.post-type-badge.hibrido {
+  background: rgba(155, 89, 182, 0.2);
+  color: #9B59B6;
+}
+
+.post-type-badge.\32 4h,
+.post-type-badge.badge-24h {
+  background: rgba(52, 152, 219, 0.25);
+  color: #3498DB;
+  border: 1px solid rgba(52, 152, 219, 0.4);
+}
+
 .post-schedule {
   font-size: 0.65rem;
   color: rgba(255, 255, 255, 0.4);
