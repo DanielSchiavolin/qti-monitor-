@@ -844,9 +844,9 @@ class QTIApp {
     if ((alertShift === 'noturno' || alertShift === '24h') && post.alertTimeNoturno) {
       alertsText.push(`🌙 ${post.alertTimeNoturno}`);
     }
-    if (alertsText.length > 0) {
-      scheduleText += ` · Alerta: ${alertsText.join(' | ')}`;
-    }
+    const alertHtml = alertsText.length > 0
+      ? `<div class="post-alert">⏰ Alerta: ${alertsText.join(' · ')}</div>`
+      : '';
 
     let lastUpdateText = '';
     if (post.lastUpdate) {
@@ -863,7 +863,7 @@ class QTIApp {
         <span class="post-name">${post.name}</span>
         <span class="post-type-badge ${typeClass} badge-${typeClass}">${typeLabel}</span>
       </div>
-      <div class="post-schedule">${scheduleText}</div>
+      <div class="post-schedule">${scheduleText}${alertHtml}</div>
       <div class="post-status-display ${displayStatusClass}">${displayStatusText}</div>
       <div class="status-buttons">
         <button class="btn-status btn-red${post.status === 'sem_contato' ? ' active' : ''}" ${disabledAttr} onclick="app.setStatus('${post.id}', 'sem_contato')">
