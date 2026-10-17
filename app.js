@@ -526,42 +526,30 @@ class QTIApp {
     return newPost;
   }
 
-  isActiveToday(post) {
+  // Shift the post works TODAY: 'diurno', 'noturno', '24h' or 'folga'.
+  // Single source of truth for hybrid schedules and for the days of every other escala
+  // (24h posts used to ignore the selected days and run every day).
+  getTodayShiftType(post) {
     post = this.migratePostIfNeeded(post);
-    if (post.escalaType === '24h') {
-      return true;
-    }
     const today = new Date().getDay();
     if (post.escalaType === 'hibrido') {
-      if (Array.isArray(post.hibridoSchedule)) {
-        return post.hibridoSchedule[today] !== undefined && post.hibridoSchedule[today] !== 'folga';
-      }
-      return post.hibridoSchedule && post.hibridoSchedule[today] !== 'folga';
+      return (post.hibridoSchedule && post.hibridoSchedule[today]) || 'folga';
     }
-    return Array.isArray(post.days) && post.days.includes(today);
+    const days = Array.isArray(post.days) ? post.days : (post.escalaType === '24h' ? [0, 1, 2, 3, 4, 5, 6] : []);
+    return days.includes(today) ? post.escalaType : 'folga';
+  }
+
+  isActiveToday(post) {
+    return this.getTodayShiftType(post) !== 'folga';
   }
 
   // Check if post is operating RIGHT NOW
   isOperatingNow(post) {
-    if (!this.isActiveToday(post)) return false;
-    
-    post = this.migratePostIfNeeded(post);
+    const todayType = this.getTodayShiftType(post);
     const currentMinutes = new Date().getHours() * 60 + new Date().getMinutes();
-    const today = new Date().getDay();
-    
-    let operatesTurno1 = false; // Diurno: 00:00 às 16:59
-    let operatesTurno2 = false; // Noturno: 17:00 às 23:59
 
-    if (post.escalaType === 'hibrido') {
-      const todayType = Array.isArray(post.hibridoSchedule) ? post.hibridoSchedule[today] : (post.hibridoSchedule ? post.hibridoSchedule[today] : 'folga');
-      if (todayType === 'diurno') operatesTurno1 = true;
-      if (todayType === 'noturno') operatesTurno2 = true;
-      if (todayType === '24h') { operatesTurno1 = true; operatesTurno2 = true; }
-    } else {
-      if (post.escalaType === 'diurno') operatesTurno1 = true;
-      else if (post.escalaType === 'noturno') operatesTurno2 = true;
-      else if (post.escalaType === '24h') { operatesTurno1 = true; operatesTurno2 = true; }
-    }
+    const operatesTurno1 = todayType === 'diurno' || todayType === '24h';  // Diurno: 00:00 às 16:59
+    const operatesTurno2 = todayType === 'noturno' || todayType === '24h'; // Noturno: 17:00 às 23:59
 
     if (!operatesTurno1 && !operatesTurno2) return false;
 
@@ -768,6 +756,25 @@ class QTIApp {
     });
   }
 
+  // "Dom 🔄 24h · Seg–Sex 🌙 Noturno · Sáb 🔄 24h" (folga days are omitted)
+  describeHibrido(schedule) {
+    if (!schedule) return '';
+    const names = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    const labels = { diurno: '☀️ Diurno', noturno: '🌙 Noturno', '24h': '🔄 24h' };
+    const parts = [];
+    let i = 0;
+    while (i < 7) {
+      const type = schedule[i] || 'folga';
+      let j = i;
+      while (j + 1 < 7 && (schedule[j + 1] || 'folga') === type) j++;
+      if (type !== 'folga') {
+        parts.push(`${i === j ? names[i] : `${names[i]}–${names[j]}`} ${labels[type] || type}`);
+      }
+      i = j + 1;
+    }
+    return parts.join(' · ');
+  }
+
   // Create a single post card element
   createPostCard(post) {
     post = this.migratePostIfNeeded(post);
@@ -792,41 +799,34 @@ class QTIApp {
     let displayStatusText = statusLabels[post.status] || 'Aguardando...';
     let displayStatusClass = statusClasses[post.status] || 'none';
 
-    let typeLabel = '';
-    if (post.escalaType === 'hibrido') typeLabel = 'Híbrido';
-    else if (post.escalaType === '24h') typeLabel = '24h';
-    else if (post.escalaType === 'diurno') typeLabel = 'Diurno';
-    else if (post.escalaType === 'noturno') typeLabel = 'Noturno';
-    else typeLabel = 'Inativo';
+    const shiftLabels = { diurno: 'Diurno', noturno: 'Noturno', '24h': '24h', folga: 'Folga' };
+    const todayType = this.getTodayShiftType(post);
+
+    // Hybrid badge shows what the post works TODAY, so a night-only day is never shown as 24h
+    let typeLabel = shiftLabels[post.escalaType] || 'Inativo';
+    let typeClass = post.escalaType || 'inativo';
+    if (post.escalaType === 'hibrido') {
+      typeLabel = `Híbrido · hoje ${shiftLabels[todayType] || 'Folga'}`;
+      typeClass = 'hibrido';
+    }
 
     if (!isOperating) {
       displayStatusClass = 'none';
-      if (!this.isActiveToday(post)) {
+      if (todayType === 'folga') {
         displayStatusText = '⛔ Folga Hoje';
+      } else if (todayType === 'noturno') {
+        displayStatusText = `🌙 Turno 17h (${post.alertTimeNoturno})`;
+      } else if (todayType === 'diurno') {
+        displayStatusText = `☀️ Turno 00h (${post.alertTimeDiurno})`;
       } else {
-        let todayType = '';
-        if (post.escalaType === 'hibrido') {
-           todayType = post.hibridoSchedule ? post.hibridoSchedule[new Date().getDay()] : 'folga';
-        } else {
-           todayType = post.escalaType;
-        }
-
-        if (todayType === 'noturno') displayStatusText = `🌙 Turno 17h (${post.alertTimeNoturno})`;
-        else if (todayType === 'diurno') displayStatusText = `☀️ Turno 00h (${post.alertTimeDiurno})`;
-        else displayStatusText = 'Inativo no momento';
+        displayStatusText = 'Inativo no momento';
       }
     }
 
     const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
     let scheduleText = '';
     if (post.escalaType === 'hibrido') {
-      let activeDays = 0;
-      if (post.hibridoSchedule) {
-        for (let i = 0; i < 7; i++) {
-          if (post.hibridoSchedule[i] !== 'folga') activeDays++;
-        }
-      }
-      scheduleText = `Escala Híbrida (${activeDays} dias/sem)`;
+      scheduleText = this.describeHibrido(post.hibridoSchedule) || 'Sem dias configurados';
     } else {
       if (post.days && post.days.length < 7) {
         scheduleText = post.days.map(d => dayNames[d]).join(', ');
@@ -834,13 +834,15 @@ class QTIApp {
         scheduleText = 'Todos os dias';
       }
     }
-    
+
+    // Only show the alerts of the shift that applies (for hybrid: today's shift)
+    const alertShift = post.escalaType === 'hibrido' ? todayType : post.escalaType;
     let alertsText = [];
-    if (post.escalaType === 'diurno' || post.escalaType === '24h' || post.escalaType === 'hibrido') {
-       if (post.alertTimeDiurno) alertsText.push(`☀️ ${post.alertTimeDiurno}`);
+    if ((alertShift === 'diurno' || alertShift === '24h') && post.alertTimeDiurno) {
+      alertsText.push(`☀️ ${post.alertTimeDiurno}`);
     }
-    if (post.escalaType === 'noturno' || post.escalaType === '24h' || post.escalaType === 'hibrido') {
-       if (post.alertTimeNoturno) alertsText.push(`🌙 ${post.alertTimeNoturno}`);
+    if ((alertShift === 'noturno' || alertShift === '24h') && post.alertTimeNoturno) {
+      alertsText.push(`🌙 ${post.alertTimeNoturno}`);
     }
     if (alertsText.length > 0) {
       scheduleText += ` · Alerta: ${alertsText.join(' | ')}`;
@@ -859,7 +861,7 @@ class QTIApp {
       <button class="btn-delete-post" onclick="app.confirmDelete('${post.id}', '${post.name}')" title="Deletar posto">✕</button>
       <div class="post-header">
         <span class="post-name">${post.name}</span>
-        <span class="post-type-badge ${typeLabel.toLowerCase()} badge-${typeLabel.toLowerCase()}">${typeLabel}</span>
+        <span class="post-type-badge ${typeClass} badge-${typeClass}">${typeLabel}</span>
       </div>
       <div class="post-schedule">${scheduleText}</div>
       <div class="post-status-display ${displayStatusClass}">${displayStatusText}</div>
@@ -1267,6 +1269,22 @@ class QTIApp {
         this.showToast('Configure pelo menos um dia ativo na escala híbrida', 'error');
         return;
       }
+
+      // Each alert time is required only if some day uses that shift, and cleared otherwise,
+      // so a hybrid never flashes outside the shifts it actually has
+      const types = Object.values(hibridoSchedule);
+      const usesTurno1 = types.some(t => t === 'diurno' || t === '24h');
+      const usesTurno2 = types.some(t => t === 'noturno' || t === '24h');
+      if (usesTurno1 && !alertTimeDiurno) {
+        this.showToast('Informe o horário de alerta do Turno 1 (há dias Diurno/24h na escala)', 'error');
+        return;
+      }
+      if (usesTurno2 && !alertTimeNoturno) {
+        this.showToast('Informe o horário de alerta do Turno 2 (há dias Noturno/24h na escala)', 'error');
+        return;
+      }
+      if (!usesTurno1) alertTimeDiurno = '';
+      if (!usesTurno2) alertTimeNoturno = '';
     } else if (days.length === 0) {
       this.showToast('Selecione pelo menos um dia de funcionamento', 'error');
       return;
@@ -1399,7 +1417,7 @@ class QTIApp {
 
     document.getElementById('new-post-escala-type').addEventListener('change', (e) => {
       this.updateEscalaUI(e.target.value);
-      if (e.target.value === '24h') {
+      if (e.target.value === '24h' || e.target.value === 'hibrido') {
         const d = document.getElementById('new-post-alert-diurno');
         const n = document.getElementById('new-post-alert-noturno');
         if (!d.value) d.value = '04:00';
