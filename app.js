@@ -30,6 +30,13 @@ const DEFAULT_POSTS = [
   { id: 'ibirapuera_1789936286981', name: 'Ibirapuera', category: 'Limpeza', escalaType: 'hibrido', days: [3], alertTimeDiurno: '07:00', alertTimeNoturno: '', hibridoSchedule: ['folga','folga','folga','diurno','folga','folga','folga'] },
 ];
 
+// Escapes text coming from the database before it goes into innerHTML
+function escapeHtml(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
 class SoundManager {
   constructor() {
     this.audioCtx = null;
@@ -430,11 +437,12 @@ class QTIApp {
       banner.className = 'alert-banner';
       banner.innerHTML = `
         <div>
-          <strong>⚠️ Regras do Firebase Expiradas (Modo Teste de 30 dias)</strong><br>
+          <strong>⚠️ Sem permissão no banco de dados</strong><br>
           <span style="font-size:0.75rem; opacity:0.9;">
-            O app está rodando localmente. Para reativar a sincronização online da equipe: acesse o 
-            <a href="https://console.firebase.google.com/project/front-security-qti/database/rules" target="_blank">Firebase Console ➔ Realtime Database ➔ Regras</a>
-            e troque para <code>".read": true, ".write": true</code>.
+            As alterações NÃO estão chegando à equipe. Recarregue a página e entre com a senha da equipe.
+            Se continuar, confira as regras em
+            <a href="https://console.firebase.google.com/project/front-security-qti/database/rules" target="_blank" rel="noopener">Firebase Console ➔ Realtime Database ➔ Regras</a>
+            (nunca use <code>".write": true</code>: isso deixa qualquer pessoa apagar o banco).
           </span>
         </div>
         <button onclick="this.parentElement.remove()" style="background:none;border:none;color:#FFF;font-size:1.1rem;cursor:pointer;">✕</button>
@@ -739,7 +747,7 @@ class QTIApp {
       section.innerHTML = `
         <div class="category-header">
           <div class="category-icon">${categoryIcons[catName] || '📌'}</div>
-          <h2 class="category-title">${catName}</h2>
+          <h2 class="category-title">${escapeHtml(catName)}</h2>
           <span class="category-count">${activeCount}/${posts.length} no turno</span>
         </div>
         <div class="posts-grid"></div>
@@ -855,24 +863,26 @@ class QTIApp {
     }
 
     const disabledAttr = !isOperating ? 'disabled' : '';
+    // Names and ids come from the database: escape them before putting them in HTML
+    const safeId = escapeHtml(post.id);
 
     card.innerHTML = `
-      <button class="btn-edit-post" onclick="app.showEditPostModal('${post.id}')" title="Editar posto">✏️</button>
-      <button class="btn-delete-post" onclick="app.confirmDelete('${post.id}', '${post.name}')" title="Deletar posto">✕</button>
+      <button class="btn-edit-post" onclick="app.showEditPostModal('${safeId}')" title="Editar posto">✏️</button>
+      <button class="btn-delete-post" onclick="app.confirmDelete('${safeId}')" title="Deletar posto">✕</button>
       <div class="post-header">
-        <span class="post-name">${post.name}</span>
+        <span class="post-name">${escapeHtml(post.name)}</span>
         <span class="post-type-badge ${typeClass} badge-${typeClass}">${typeLabel}</span>
       </div>
       <div class="post-schedule">${scheduleText}${alertHtml}</div>
       <div class="post-status-display ${displayStatusClass}">${displayStatusText}</div>
       <div class="status-buttons">
-        <button class="btn-status btn-red${post.status === 'sem_contato' ? ' active' : ''}" ${disabledAttr} onclick="app.setStatus('${post.id}', 'sem_contato')">
+        <button class="btn-status btn-red${post.status === 'sem_contato' ? ' active' : ''}" ${disabledAttr} onclick="app.setStatus('${safeId}', 'sem_contato')">
           🔴 Sem Contato
         </button>
-        <button class="btn-status btn-yellow${post.status === 'qti' ? ' active' : ''}" ${disabledAttr} onclick="app.setStatus('${post.id}', 'qti')">
+        <button class="btn-status btn-yellow${post.status === 'qti' ? ' active' : ''}" ${disabledAttr} onclick="app.setStatus('${safeId}', 'qti')">
           🟡 QTI
         </button>
-        <button class="btn-status btn-green${post.status === 'chegou' ? ' active' : ''}" ${disabledAttr} onclick="app.setStatus('${post.id}', 'chegou')">
+        <button class="btn-status btn-green${post.status === 'chegou' ? ' active' : ''}" ${disabledAttr} onclick="app.setStatus('${safeId}', 'chegou')">
           🟢 Chegou
         </button>
       </div>
@@ -929,7 +939,7 @@ class QTIApp {
   }
 
   // Confirm delete
-  confirmDelete(postId, postName) {
+  confirmDelete(postId, postName = (this.posts[postId] || {}).name || '') {
     const overlay = document.getElementById('confirm-overlay');
     document.getElementById('confirm-message').textContent = `Tem certeza que deseja deletar o posto "${postName}"?`;
     overlay.classList.add('active');
@@ -1439,4 +1449,7 @@ class QTIApp {
 // Initialize app when DOM is ready
 const app = new QTIApp();
 window.app = app;
-document.addEventListener('DOMContentLoaded', () => app.init());
+// The app starts only after the team password is accepted (auth-gate.js)
+document.addEventListener('DOMContentLoaded', () => {
+  AuthGate.start(app.firebase.getConfig() || QTIApp.DEFAULT_CONFIG).then(() => app.init());
+});
