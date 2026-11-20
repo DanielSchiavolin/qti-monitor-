@@ -158,18 +158,19 @@ function holidayName(date) {
   return '';
 }
 
-// Holiday rule of a hybrid post that applies on a Date (a holiday falling Mon–Fri), or null.
+// Holiday rule of a hybrid post that applies on a Date, or null when the day stays as usual.
 // post.hibridoFeriado: 'auto' (default) | 'normal' | 'diurno' | 'noturno' | '24h' | 'folga'.
-// auto = 24h when the post's weekend is 24h (day shift too, like sáb/dom), else a normal day.
+// An explicit rule applies on any holiday. auto (holidays falling Mon–Fri only): a post that has a
+// day shift on the weekend and works only the night on that weekday also gets the day shift (24h).
 function hybridHolidayShift(post, date) {
-  if (!post || post.escalaType !== 'hibrido') return null;
-  const dow = date.getDay();
-  if (dow === 0 || dow === 6 || !holidayName(date)) return null;
-  const sched = post.hibridoSchedule || [];
+  if (!post || post.escalaType !== 'hibrido' || !holidayName(date)) return null;
   const rule = post.hibridoFeriado || 'auto';
   if (rule === 'normal') return null;
-  if (rule === 'auto') return sched[0] === '24h' || sched[6] === '24h' ? '24h' : null;
-  return rule;
+  if (rule !== 'auto') return rule;
+  const sched = post.hibridoSchedule || [];
+  const dow = date.getDay();
+  const hasDay = t => t === 'diurno' || t === '24h';
+  return dow >= 1 && dow <= 5 && sched[dow] === 'noturno' && (hasDay(sched[0]) || hasDay(sched[6])) ? '24h' : null;
 }
 
 class FirebaseManager {
@@ -1185,7 +1186,7 @@ class QTIApp {
           <option value="normal">Dia normal</option>
         </select>
       </div>
-      <small style="opacity: 0.7; font-size: 0.75rem;">Feriado em dia de semana. Automático: 24h quando o sábado ou o domingo é 24h; senão, dia normal.</small>
+      <small style="opacity: 0.7; font-size: 0.75rem;">Automático: em feriado de seg a sex, o dia que é só noturno vira 24h quando o posto tem diurno no sábado ou domingo.</small>
     `;
   }
 
