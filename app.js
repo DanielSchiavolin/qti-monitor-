@@ -127,6 +127,51 @@ class SoundManager {
   }
 }
 
+// ===== Holidays: national + São Paulo (state and city) =====
+const FIXED_HOLIDAYS = {
+  '01-01': 'Confraternização Universal', '01-25': 'Aniversário de São Paulo', '04-21': 'Tiradentes',
+  '05-01': 'Dia do Trabalho', '07-09': 'Revolução Constitucionalista', '09-07': 'Independência',
+  '10-12': 'Nossa Senhora Aparecida', '11-02': 'Finados', '11-15': 'Proclamação da República',
+  '11-20': 'Consciência Negra', '12-25': 'Natal',
+};
+
+// Easter Sunday of a year (Gregorian computus)
+function easterDate(year) {
+  const a = year % 19, b = Math.floor(year / 100), c = year % 100;
+  const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+  return new Date(year, Math.floor((h + l - 7 * m + 114) / 31) - 1, ((h + l - 7 * m + 114) % 31) + 1);
+}
+
+// Name of the holiday on a Date, or '' (fixed dates + Sexta-feira Santa + Corpus Christi)
+function holidayName(date) {
+  const key = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  if (FIXED_HOLIDAYS[key]) return FIXED_HOLIDAYS[key];
+  const same = offset => {
+    const d = easterDate(date.getFullYear());
+    d.setDate(d.getDate() + offset);
+    return d.getMonth() === date.getMonth() && d.getDate() === date.getDate();
+  };
+  if (same(-2)) return 'Sexta-feira Santa';
+  if (same(60)) return 'Corpus Christi';
+  return '';
+}
+
+// Holiday rule of a hybrid post that applies on a Date (a holiday falling Mon–Fri), or null.
+// post.hibridoFeriado: 'auto' (default) | 'normal' | 'diurno' | 'noturno' | '24h' | 'folga'.
+// auto = 24h when the post's weekend is 24h (day shift too, like sáb/dom), else a normal day.
+function hybridHolidayShift(post, date) {
+  if (!post || post.escalaType !== 'hibrido') return null;
+  const dow = date.getDay();
+  if (dow === 0 || dow === 6 || !holidayName(date)) return null;
+  const sched = post.hibridoSchedule || [];
+  const rule = post.hibridoFeriado || 'auto';
+  if (rule === 'normal') return null;
+  if (rule === 'auto') return sched[0] === '24h' || sched[6] === '24h' ? '24h' : null;
+  return rule;
+}
+
 class FirebaseManager {
   constructor() {
     this.db = null;
@@ -541,7 +586,7 @@ class QTIApp {
     post = this.migratePostIfNeeded(post);
     const today = new Date().getDay();
     if (post.escalaType === 'hibrido') {
-      return (post.hibridoSchedule && post.hibridoSchedule[today]) || 'folga';
+      return hybridHolidayShift(post, new Date()) || (post.hibridoSchedule && post.hibridoSchedule[today]) || 'folga';
     }
     const days = Array.isArray(post.days) ? post.days : (post.escalaType === '24h' ? [0, 1, 2, 3, 4, 5, 6] : []);
     return days.includes(today) ? post.escalaType : 'folga';
@@ -814,7 +859,7 @@ class QTIApp {
     let typeLabel = shiftLabels[post.escalaType] || 'Inativo';
     let typeClass = post.escalaType || 'inativo';
     if (post.escalaType === 'hibrido') {
-      typeLabel = `Híbrido · hoje ${shiftLabels[todayType] || 'Folga'}`;
+      typeLabel = `Híbrido · hoje ${shiftLabels[todayType] || 'Folga'}${hybridHolidayShift(post, new Date()) ? ' (feriado)' : ''}`;
       typeClass = 'hibrido';
     }
 
@@ -1128,6 +1173,20 @@ class QTIApp {
         </div>
       `;
     });
+    grid.innerHTML += `
+      <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 4px;">
+        <span style="font-size: 0.9rem;">🎉 Feriado</span>
+        <select id="hibrido-feriado" class="form-select" style="width: auto; padding: 4px; font-size: 0.85rem;">
+          <option value="auto">Automático</option>
+          <option value="24h">24h</option>
+          <option value="diurno">Diurno</option>
+          <option value="noturno">Noturno</option>
+          <option value="folga">Folga</option>
+          <option value="normal">Dia normal</option>
+        </select>
+      </div>
+      <small style="opacity: 0.7; font-size: 0.75rem;">Feriado em dia de semana. Automático: 24h quando o sábado ou o domingo é 24h; senão, dia normal.</small>
+    `;
   }
 
   updateEscalaUI(type) {
@@ -1176,6 +1235,8 @@ class QTIApp {
       const el = document.getElementById(`hibrido-day-${i}`);
       if (el) el.value = 'folga';
     }
+    const feriadoEl = document.getElementById('hibrido-feriado');
+    if (feriadoEl) feriadoEl.value = 'auto';
   }
 
   showEditPostModal(postId) {
@@ -1215,6 +1276,8 @@ class QTIApp {
         if (el) el.value = post.hibridoSchedule[i] || 'folga';
       }
     }
+    const feriadoEl = document.getElementById('hibrido-feriado');
+    if (feriadoEl) feriadoEl.value = post.hibridoFeriado || 'auto';
     
     document.getElementById('add-post-modal').classList.add('active');
   }
@@ -1317,6 +1380,9 @@ class QTIApp {
       status, lastUpdate, lastShiftReset 
     };
     
+    const feriadoEl = document.getElementById('hibrido-feriado');
+    if (escalaType === 'hibrido' && feriadoEl && feriadoEl.value !== 'auto') post.hibridoFeriado = feriadoEl.value;
+
     this.posts[id] = post;
     localStorage.setItem('qti_posts', JSON.stringify(this.posts));
     this.renderPosts();
